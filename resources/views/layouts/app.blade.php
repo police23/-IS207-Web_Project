@@ -24,6 +24,7 @@
     integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
     crossorigin="anonymous" referrerpolicy="no-referrer">
     @stack('style')
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 
 <body class="gradient-bg">
@@ -250,6 +251,9 @@
         d="M14.7692 11.0769V12.72C14.7693 13.2579 14.8869 13.7893 15.1138 14.2769L15.1384 14.3262L9.66767 8.85541L8.86151 9.66156L14.3323 15.1323H14.283C13.7949 14.8982 13.2613 14.7742 12.72 14.7693H11.0769V16H16V11.0769H14.7692Z"
         fill="currentColor" />
     </symbol>
+    <symbol id="icon_info" viewBox="0 0 20 20">
+      <path d="M10 0C4.477 0 0 4.477 0 10s4.477 10 10 10 10-4.477 10-10S15.523 0 10 0zm1 15h-2v-6h2v6zm0-8h-2V5h2v2z" fill="currentColor"/>
+    </symbol>
   </svg>
   <style>
     #header {
@@ -310,19 +314,36 @@
         <div class="overflow-hidden">
           <ul class="navigation__list list-unstyled position-relative">
             <li class="navigation__item">
-              <a href="index.html" class="navigation__link">Trang chủ</a>
+              <a href="{{route('home.index')}}" class="navigation__link">
+                <svg class="d-inline-block me-2" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <use href="#icon_home" />
+                </svg>
+                Trang chủ
+              </a>
             </li>
             <li class="navigation__item">
-              <a href="shop.html" class="navigation__link">Sản phẩm</a>
+              <a href="{{route('shop.index')}}" class="navigation__link">
+                <svg class="d-inline-block me-2" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <use href="#icon_phone" />
+                </svg>
+                Sản phẩm
+              </a>
             </li>
             <li class="navigation__item">
-              <a href="cart.html" class="navigation__link">Giỏ hàng</a>
+              <a href="{{route('cart.index')}}" class="navigation__link">
+                <svg class="d-inline-block me-2" width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <use href="#icon_cart" />
+                </svg>
+                Giỏ hàng
+              </a>
             </li>
             <li class="navigation__item">
-              <a href="about.html" class="navigation__link">About us</a>
-            </li>
-            <li class="navigation__item">
-              <a href="contact.html" class="navigation__link">Liên hệ</a>
+              <a href="{{route('about.index')}}" class="navigation__link">
+                <svg class="d-inline-block me-2" width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <use href="#icon_info" />
+                </svg>
+                About us
+              </a>
             </li>
           </ul>
         </div>
@@ -399,19 +420,36 @@
         <nav class="navigation">
           <ul class="navigation__list list-unstyled d-flex">
             <li class="navigation__item">
-              <a href="{{ route('home.index') }}" class="navigation__link">Trang chủ</a>
+              <a href="{{ route('home.index') }}" class="navigation__link">
+                <svg class="d-inline-block me-2" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <use href="#icon_home" />
+                </svg>
+                Trang chủ
+              </a>
             </li>
             <li class="navigation__item">
-              <a href="shop.html" class="navigation__link">Sản phẩm</a>
+              <a href="{{ route('shop.index') }}" class="navigation__link">
+                <svg class="d-inline-block me-2" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <use href="#icon_phone" />
+                </svg>
+                Sản phẩm
+              </a>
             </li>
             <li class="navigation__item">
-              <a href="cart.html" class="navigation__link">Giỏ hàng</a>
+              <a href="{{route('cart.index')}}" class="navigation__link">
+                <svg class="d-inline-block me-2" width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <use href="#icon_cart" />
+                </svg>
+                Giỏ hàng
+              </a>
             </li>
             <li class="navigation__item">
-              <a href="about.html" class="navigation__link">About us</a>
-            </li>
-            <li class="navigation__item">
-              <a href="contact.html" class="navigation__link">Liên hệ</a>
+              <a href="{{ route('about.index') }}" class="navigation__link">
+                <svg class="d-inline-block me-2" width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <use href="#icon_info" />
+                </svg>
+                About us
+              </a>
             </li>
           </ul>
         </nav>
@@ -429,75 +467,32 @@
             </div>
 
             <div class="search-popup js-hidden-content">
-              <form action="#" method="GET" class="search-field container">
+              <form action="{{ route('shop.index') }}" method="GET" class="search-field container">
                 <p class="text-uppercase text-secondary fw-medium mb-4">Bạn đang tìm kiếm gì?</p>
                 <div class="position-relative">
-                  <input class="search-field__input search-popup__input w-100 fw-medium" type="text"
-                    name="search-keyword" placeholder="Tìm kiếm..." />
+                  <input class="search-field__input search-popup__input w-100 fw-medium" type="text" name="search-keyword" placeholder="Tìm kiếm..." />
                   <button class="btn-icon search-popup__submit" type="submit">
-                    <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none"
-                      xmlns="http://www.w3.org/2000/svg">
+                    <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <use href="#icon_search" />
                     </svg>
                   </button>
                   <button class="btn-icon btn-close-lg search-popup__reset" type="reset"></button>
                 </div>
-
-                <div class="search-popup__results">
-                  <div class="sub-menu search-suggestion">
-                    <h6 class="sub-menu__title fs-base">Danh mục</h6>
-                    <ul class="sub-menu__list list-unstyled">
-                      <li class="sub-menu__item"><a href="shop2.html" class="menu-link menu-link_us-s">Apple</a>
-                      </li>
-                      <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Samsung</a></li>
-                      <li class="sub-menu__item"><a href="shop3.html" class="menu-link menu-link_us-s">OPPO</a>
-                      </li>
-                      <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Xiaomi</a></li>
-                      <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Nokia</a></li>
-                      <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Realme</a></li>
-                    </ul>
-                  </div>
-
-                  <div class="search-result row row-cols-5"></div>
-                </div>
+                <div class="search-result row row-cols-5"></div>
               </form>
             </div>
           </div>
 
-          @guest
           <div class="header-tools__item hover-container">
-            <a href="{{ route('login') }}" class="header-tools__item">
-              <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
+            <a href="{{ Auth::check() ? route('profile') : route('login') }}" class="header-tools__item">
+              @if(Auth::check())
+                <span class="pr-6px">{{ Auth::user()->username }}</span>
+              @endif
+              <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <use href="#icon_user" />
               </svg>
             </a>
           </div>
-          @else
-          <div class="header-tools__item hover-container">
-            <a href="{{ Auth::user()->role === 'ADMIN' ? route('admin.index') : route('user.index')}}" class="header-tools__item">
-              <span class="pr-6px"> {{ Auth::user()->username}}</span>
-              <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <use href="#icon_user" />
-              </svg>
-            </a>
-          </div>
-          @endguest
-
-          <a href="wishlist.html" class="header-tools__item">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <use href="#icon_heart" />
-            </svg>
-          </a>
-
-          <a href="cart.html" class="header-tools__item header-tools__cart">
-            <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none"
-              xmlns="http://www.w3.org/2000/svg">
-              <use href="#icon_cart" />
-            </svg>
-            <span class="cart-amount d-block position-absolute js-cart-items-count">3</span>
-          </a>
         </div>
       </div>
     </div>
@@ -619,19 +614,6 @@
             <use href="#icon_phone" />
           </svg>
           <span>Sản phẩm</span>
-        </a>
-      </div>
-
-      <div class="col-4">
-        <a href="wishlist.html" class="footer-mobile__link d-flex flex-column align-items-center">
-          <div class="position-relative">
-            <svg class="d-block" width="18" height="18" viewBox="0 0 20 20" fill="none"
-              xmlns="http://www.w3.org/2000/svg">
-              <use href="#icon_heart" />
-            </svg>
-            <span class="wishlist-amount d-block position-absolute js-wishlist-count">3</span>
-          </div>
-          <span>Yêu thích</span>
         </a>
       </div>
     </div>
