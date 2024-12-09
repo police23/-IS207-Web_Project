@@ -32,8 +32,47 @@
                                                 </div>
                                             </form>
                                         </div>
-                                        <a class="tf-button style-1 w208" href="{{ route('admin.phone.add') }}"><i
-                                                class="icon-plus"></i>Add new</a>
+
+                                        <div class="d-flex gap-3 align-items-center">
+                                        <!-- Nút Add New -->
+                                        <a 
+                                            href="{{ route('admin.phone.add') }}" 
+                                            class="btn btn-primary btn-lg d-flex align-items-center gap-2"
+                                        >
+                                            <i class="icon-plus" style="font-size: 1.2rem;"></i>
+                                            Add new
+                                        </a>
+
+                                        <!-- Form Import -->
+                                        <form 
+                                            action="{{ route('admin.phones.import') }}" 
+                                            method="POST" 
+                                            enctype="multipart/form-data" 
+                                            class="d-flex align-items-center gap-2"
+                                        >
+                                            @csrf
+                                            
+                                            <!-- Input file ẩn -->
+                                            <input 
+                                                id="excel_file_input" 
+                                                type="file" 
+                                                name="excel_file" 
+                                                class="d-none"
+                                                onchange="this.form.submit()"  
+                                            >
+                                            
+                                            <!-- Nút Import -->
+                                            <label 
+                                                for="excel_file_input" 
+                                                class="btn btn-success btn-lg mb-0 d-flex align-items-center gap-2"
+                                            >
+                                                <i class="icon-upload"></i>
+                                                Import CSV
+                                            </label>
+                                        </form>
+                                    </div>
+
+                                        
                                     </div>
                                     <div class="table-responsive">
                                         @if(Session::has('success'))
@@ -193,6 +232,10 @@
                 }
             });
         });
+    });
+
+    document.getElementById("excel_file_input").addEventListener("change", function() {
+        document.getElementById("importForm").submit();
     });
 </script>
 @endpush

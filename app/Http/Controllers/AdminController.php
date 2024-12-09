@@ -8,6 +8,8 @@ use File;
 use Illuminate\Http\Request;
 use App\Models\Brand;
 use App\Models\Storage;
+use App\Imports\PhonesImport;
+use Maatwebsite\Excel\Facades\Excel;
 class AdminController extends Controller
 {
     //
@@ -270,5 +272,12 @@ class AdminController extends Controller
     
         $phoneVariant->delete();
         return redirect()->route('admin.phones')->with('success','Phone Variant deleted successfully!');
+    }
+
+    public function importExcel(Request $request)
+    {
+        Excel::import(new PhonesImport, $request->file('excel_file'));
+
+        return redirect()->route('admin.phones')->with('success', 'Import thành công!');
     }
 }

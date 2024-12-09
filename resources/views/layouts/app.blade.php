@@ -313,7 +313,7 @@
               <a href="index.html" class="navigation__link">Trang chủ</a>
             </li>
             <li class="navigation__item">
-              <a href="shop.html" class="navigation__link">Sản phẩm</a>
+              <a href="{{ route('shop.index') }}" class="navigation__link">Sản phẩm</a>
             </li>
             <li class="navigation__item">
               <a href="cart.html" class="navigation__link">Giỏ hàng</a>
@@ -402,7 +402,7 @@
               <a href="{{ route('home.index') }}" class="navigation__link">Trang chủ</a>
             </li>
             <li class="navigation__item">
-              <a href="shop.html" class="navigation__link">Sản phẩm</a>
+              <a href="{{ route('shop.index') }}" class="navigation__link">Sản phẩm</a>
             </li>
             <li class="navigation__item">
               <a href="cart.html" class="navigation__link">Giỏ hàng</a>
