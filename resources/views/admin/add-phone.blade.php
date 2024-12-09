@@ -55,12 +55,16 @@
                                         @enderror
 
                                         <fieldset class="ram">
-                                            <div class="body-title mb-10">RAM<span class="tf-color-1">*</span>
-                                            </div>
-                                            <input class="mb-10" type="text" placeholder="Enter RAM"
-                                                name="ram" tabindex="0" value="{{ old('ram')}}" aria-required="true" required="">
-                                            <div class="text-tiny">Do not exceed 100 characters when entering the
-                                                product name.</div>
+                                            <div class="body-title mb-10">RAM<span class="tf-color-1">*</span></div>
+                                            <select class="mb-10" name="ram" tabindex="0" required>
+                                                <option value="" disabled selected>Choose RAM</option>
+                                                <option value="3GB">3GB</option>
+                                                <option value="4GB">4GB</option>
+                                                <option value="6GB">6GB</option>
+                                                <option value="8GB">8GB</option>
+                                                <option value="12GB">12GB</option>
+                                            </select>
+                                            <div class="text-tiny">Select the RAM size for the phone.</div>
                                         </fieldset>
                                         @error('ram')
                                             <span class="alert alert-danger text-center">{{ $message }}</span>
@@ -186,7 +190,7 @@
 
                                         <!-- Nút tạo biến thể -->
                                         <div class="mb-4">
-                                            <button type="button" id="generateVariants" class="btn btn-primary">Generate Variants</button>
+                                            <button type="button" id="generateVariants" class="btn btn-primary" style="background-color: #9b59b6; border-color: #9b59b6;">Generate Variants</button>
                                         </div>
 
                                         <!-- Bảng biến thể -->
@@ -213,7 +217,7 @@
 
                                         </div>
                                         <div class="cols gap10">
-                                            <button class="tf-button w-full" type="submit">Add product</button>
+                                            <button class="tf-button w-full" type="submit" style="background-color: #9b59b6; border-color: #9b59b6;">Add product</button>
                                         </div>
                                     </div>
                                     

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Phone;
 use App\Models\PhoneVariants;
-use File;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use App\Models\Brand;
 use App\Models\Storage;
@@ -132,16 +132,12 @@ class AdminController extends Controller
             $phoneVariant->featured = $featuredStatuses[$index];
             
             if (isset($images[$index]) && $images[$index]->isValid()) {
-                // Đặt tên file
                 $imageName = time() . '_' . $counter . '_' . $images[$index]->getClientOriginalName();
 
-                // Đường dẫn lưu file
                 $destinationPath = public_path('uploads/phones/thumbnails');
 
-                // Di chuyển file tới thư mục đích
                 $images[$index]->move($destinationPath, $imageName);
 
-                // Lưu đường dẫn vào cơ sở dữ liệu
                 $phoneVariant->image = $imageName;
             }
             $phoneVariant->save();

@@ -6,25 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Phone extends Model
 {
-    use HasFactory;
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
-        'phone_name',
-        'screen_size',
-        'ram',
-        'operating_system',
-        'processor',
-        'battery',
-        'description',
-        'release_date',
-        'phone_id',
-        'brand_id'
-        // Các trường khác (nếu có)
-    ];
+        'description', 
+        'screen_size', 
+        'operating_system', 
+        'processor', 
+        'ram', 
+        'battery', 
+        'release_date'
+    ]; // Add necessary attributes to fillable
     
     public function brand() {
         return $this->belongsTo(Brand::class,'brand_id');

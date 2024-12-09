@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
+
 class RegisterController extends Controller
 {
     /*
@@ -47,17 +49,20 @@ class RegisterController extends Controller
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
-{
-    return Validator::make($data, [
-        'username' => ['required', 'string', 'max:255'],
-        'fullname' => ['required', 'string', 'max:255'],
-        'gender' => ['required', 'integer', 'in:0,1'],
-        'address' => ['required', 'string', 'max:255'],
-        'phonenumber' => ['required', 'string', 'max:15'],
-        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-        'password' => ['required', 'string', 'min:8', 'confirmed'],
-    ]);
-}
+    {
+        return Validator::make($data, [
+            'username' => ['required', 'string', 'max:255', 'unique:users'],
+            'fullname' => ['required', 'string', 'max:255'],
+            'gender' => ['required', 'integer'],
+            'dob' => ['required', 'date', 'before_or_equal:' . Carbon::now()->subYears(13)->format('Y-m-d')],
+            'address' => ['required', 'string', 'max:255'],
+            'phonenumber' => ['required', 'string', 'max:15'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ], [
+            'dob.before_or_equal' => 'Người dùng phải đủ 13 tuổi mới được đăng ký.',
+        ]);
+    }
 
     /**
      * Create a new user instance after a valid registration.
@@ -66,18 +71,18 @@ class RegisterController extends Controller
      * @return \App\Models\User
      */
     protected function create(array $data)
-{
-    Log::debug('Register Data:', $data); // Ghi dữ liệu gửi lên vào log
-    $user = User::create([
-        'username' => $data['username'],
-        'fullname' => $data['fullname'],
-        'gender' => $data['gender'],
-        'address' => $data['address'],
-        'phonenumber' => $data['phonenumber'],
-        'email' => $data['email'],
-        'password' => Hash::make($data['password']),
-    ]);
-    Log::debug('Created User:', ['user' => $user]);
-    return $user;
-}
+    {
+        Log::debug('Register Data:', $data); // Ghi dữ liệu gửi lên vào log
+        $user = User::create([
+            'username' => $data['username'],
+            'fullname' => $data['fullname'],
+            'gender' => $data['gender'],
+            'address' => $data['address'],
+            'phonenumber' => $data['phonenumber'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+        ]);
+        Log::debug('Created User:', ['user' => $user]);
+        return $user;
+    }
 }
