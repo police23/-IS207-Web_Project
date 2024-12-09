@@ -18,7 +18,7 @@
                 <h5>Thông tin đơn hàng</h5>
               </div>
               <div class="col-6 text-right">
-                <a class="btn btn-sm btn-danger" href="{{ route('account.orders') }}">Quay lại</a>
+                <!-- Removed the "Quay lại" button from here -->
               </div>
             </div>
             <div class="table-responsive">
@@ -93,7 +93,6 @@
 
           </div>
 
-
           <div class="wg-box mt-5">
             <h5>Giao dịch</h5>
             <div class="table-responsive">
@@ -117,12 +116,14 @@
           </div>
 
           <div class="wg-box mt-5 text-right">
-            <form action="http://localhost:8000/account-order/cancel-order" method="POST">
-              <input type="hidden" name="_token" value="{{ csrf_token() }}" autocomplete="off">
-              <input type="hidden" name="_method" value="PUT"> 
-              <input type="hidden" name="order_id" value="{{ $order->order_id }}">
-              <button type="submit" class="btn btn-danger">Huỷ đơn hàng</button>
+            @if($order->status != 'Canceled')
+            <form id="cancel-order-form" action="{{ route('account.cancel_order', $order->order_id) }}" method="POST" onsubmit="return confirmCancelOrder()" style="display: inline;">
+              @csrf
+              @method('PUT')
+              <button type="submit" class="btn btn-danger" style="height: 38px; margin-right: 1cm;">Huỷ đơn hàng</button>
             </form>
+            @endif
+            <a class="btn btn-sm btn-secondary" href="{{ route('account.orders') }}" style="height: 38px; line-height: 28px;">Quay lại</a>
           </div>
         </div>
 
@@ -130,3 +131,9 @@
     </section>
   </main>
 @endsection
+
+<script>
+function confirmCancelOrder() {
+  return confirm('Bạn có chắc chắn muốn hủy đơn hàng?');
+}
+</script>

@@ -11,6 +11,7 @@ use App\Http\Middleware\AuthAdmin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use App\Http\Controllers\OrderController;
 
 Auth::routes(['register' => true]);
 
@@ -43,6 +44,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/change-password', [UserController::class, 'updatePassword'])->name('change-password.update');
     Route::get('/account-orders', [UserController::class, 'orders'])->name('account.orders');
     Route::get('/account-order-details/{id}', [UserController::class, 'orderDetails'])->name('account.order_details');
+    Route::put('/account-order/cancel-order/{order}', [OrderController::class, 'cancelOrder'])->name('account.cancel_order');
 });
 
 Route::middleware(['auth', AuthAdmin::class])->group(function () {

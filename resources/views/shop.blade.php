@@ -366,7 +366,7 @@
       
               <h6 class="pc__title"><a href="{{ route('phone.show', ['id' => $phone->id]) }}">{{ $phone->phone_variants_name }}</a></h6>
               <div class="product-card__price d-flex">
-                <span class="money price text-secondary">{{ ($phone->regular_price) }}</span>
+                <span class="money price text-secondary">{{ number_format($phone->regular_price, 0, ',', '.') }} đ</span>
               </div>
             </div>
           </div>

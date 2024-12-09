@@ -58,7 +58,8 @@
           <span class="reviews-note text-lowercase text-secondary ms-1">8k+ đánh giá</span>
         </div>
         <div class="product-single__price">
-          <span class="current-price" style="color: red;">{{$phoneVariant->regular_price}} đ</span>
+          <span class="current-price" style="color: red;">{{ number_format($phoneVariant->regular_price, 0, ',', '.') }} đ</span>
+          <span class="quantity-value" style="font-size: 16px; margin-left: 10px;">(Số lượng: {{ $phoneVariant->quantity }})</span>
         </div>
         <div style="margin: 10px 0;">
           <label for="color-options" style="font-weight: bold; display: block; margin-bottom: 5px; font-size: 18px;">Chọn màu sắc:</label>

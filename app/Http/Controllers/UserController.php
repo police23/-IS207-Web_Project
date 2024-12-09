@@ -77,9 +77,10 @@ class UserController extends Controller
         $orders = Order::where('user_id', Auth::id())->get();
         return view('account_orders', compact('orders'));
     }
-
     public function orderDetails($id) {
         $order = Order::with('orderDetails.phoneVariant.phone')->where('user_id', Auth::id())->where('order_id', $id)->firstOrFail();
         return view('account_order_details', compact('order'));
     }
+
+   
 }
