@@ -17,7 +17,7 @@ class CreateOrderDetailsTable extends Migration
             $table->unsignedBigInteger('order_id'); // Foreign key to orders table
             $table->unsignedBigInteger('phone_variant_id'); // Foreign key to phone_variants table
             $table->integer('quantity');
-            $table->decimal('price', 10, 2);
+            $table->unsignedBigInteger('price');
             $table->timestamps(); // Includes created_at and updated_at
 
             // Define foreign key constraints

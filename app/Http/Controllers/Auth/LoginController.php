@@ -53,7 +53,6 @@ class LoginController extends Controller
             $this->username() => [trans('auth.failed')],
          ]);
          
-        return redirect()->route('login')
-            ->withInput($request->only($this->username(), 'remember'));
+        return redirect()->route('login')->withInput($request->only($this->username(), 'remember'));
     }
 }

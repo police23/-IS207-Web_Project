@@ -4,7 +4,6 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\ShopController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\AboutController;
@@ -65,5 +64,9 @@ Route::middleware(['auth', AuthAdmin::class])->group(function () {
     Route::put('/admin/phone/update', [AdminController::class, 'phone_update'])->name('admin.phone.update');
     Route::delete('/admin/phone/delete/{id}', [AdminController::class, 'delete_phone'])->name('admin.phone.delete');
     Route::delete('/admin/phoneVariant/delete/{id}', [AdminController::class, 'delete_phone_variant'])->name('admin.phoneVariant.delete');
+
+    Route::get('/admin/orders', [AdminController::class,'orders'])->name('admin.orders');
+    Route::get('/admin/order/{order_id}/details', [AdminController::class,'order_details'])->name('admin.order.details');
+    Route::put('/admin/order/update-status', [AdminController::class, 'update_order_status'])->name('admin.order.status.update');
 });
 

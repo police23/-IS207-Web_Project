@@ -7,13 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Phone extends Model
 {
     protected $fillable = [
+        'phone_name',
         'description', 
         'screen_size', 
         'operating_system', 
         'processor', 
         'ram', 
         'battery', 
-        'release_date'
+        'release_date',
+        'brand_id'
     ]; // Add necessary attributes to fillable
     
     public function brand() {

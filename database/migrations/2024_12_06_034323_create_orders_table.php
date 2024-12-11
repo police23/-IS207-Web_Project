@@ -15,7 +15,7 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id('order_id'); // Primary key, auto-increment
             $table->unsignedBigInteger('user_id');
-            $table->decimal('total_price', 10, 2);
+            $table->unsignedBigInteger('total_price');
             $table->string('status');
             $table->string('delivery_address');
             $table->string('payment_method'); // New column

@@ -10,7 +10,18 @@ class PhoneVariants extends Model
     use HasFactory;
     
     protected $table = 'phone_variants';
-    
+    protected $fillable = [
+        'phone_variants_name',
+        'color', 
+        'image', 
+        'average_rate', 
+        'quantity', 
+        'regular_price', 
+        'stock_status', 
+        'featured',
+        'phone_id',
+        'storage_id'
+    ]; // Add necessary attributes to fillable
     
     public function phone() {
         return $this->belongsTo(Phone::class, 'phone_id');

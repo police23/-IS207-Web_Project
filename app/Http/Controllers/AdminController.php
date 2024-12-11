@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
+use App\Models\OrderDetails;
 use App\Models\Phone;
 use App\Models\PhoneVariants;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use App\Models\Brand;
@@ -275,5 +278,69 @@ class AdminController extends Controller
         Excel::import(new PhonesImport, $request->file('excel_file'));
 
         return redirect()->route('admin.phones')->with('success', 'Import thành công!');
+    }
+
+    public function orders(Request $request) {
+       
+    // Lấy tất cả các input từ form
+    $searchKeyword = $request->input('search_keyword');
+    $startDate = $request->input('start_date');
+    $endDate = $request->input('end_date');
+    $minPrice = $request->input('min_price');
+    $maxPrice = $request->input('max_price');
+
+    // Truy vấn cơ bản
+    $query = Order::query();
+
+    // Lọc theo từ khóa (Order ID hoặc tên khách hàng)
+    if ($searchKeyword) {
+        $query->where(function ($q) use ($searchKeyword) {
+            $q->where('order_id', 'like', "%$searchKeyword%")
+              ->orWhereHas('user', function ($userQuery) use ($searchKeyword) {
+                  $userQuery->where('fullname', 'like', "%$searchKeyword%");
+              });
+        });
+    }
+
+    // Lọc theo khoảng thời gian
+    if ($startDate) {
+        
+        $query->whereDate('created_at', '>=', $startDate);
+    }
+
+    if ($endDate) {
+        
+        $query->whereDate('created_at', '<=', $endDate);
+    }
+
+    // Lọc theo giá trị thành tiền
+    if ($minPrice) {
+        $query->where('total_price', '>=', $minPrice);
+    }
+    if ($maxPrice) {
+        $query->where('total_price', '<=', $maxPrice);
+    }
+
+    // Sắp xếp và phân trang
+    $orders = $query->orderBy('created_at', 'desc')->paginate(12);
+
+    // Trả về view với dữ liệu
+    return view('admin.orders', compact('orders'));
+}
+
+    public function order_details($order_id) {
+        $order = Order::find($order_id);
+        $orderDetails = OrderDetails::where('order_id', $order_id)->orderBy('id','desc')->paginate(12);
+        return view('admin.order-details', compact('order','orderDetails'));
+    } 
+
+    public function update_order_status(Request $request) {
+        $order = Order::find($request->order_id);
+        $order->status = $request->order_status;
+        if ($order->status == 'delivered') {
+            $order->delivery_date = Carbon::Now();
+        }
+        $order->save();
+        return back()->with('success','Status changed successfully');
     }
 }

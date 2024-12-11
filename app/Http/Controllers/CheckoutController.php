@@ -47,7 +47,7 @@ class CheckoutController extends Controller
             $order = Order::create([
                 'user_id' => Auth::id(),
                 'total_price' => $request->input('total_price'),
-                'status' => 'pending',
+                'status' => 'Ordered',
                 'delivery_address' => $request->input('address'),
                 'payment_method' => $request->input('checkout_payment_method'),
             ]);

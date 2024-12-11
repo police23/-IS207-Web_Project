@@ -37,11 +37,11 @@
                                     <td class="text-center">{{ $order->created_at }}</td>
                                     <td class="text-center">
                                         @if($order->status == 'Canceled')
-                                        <span class="badge bg-danger">Canceled</span>
+                                        <span class="badge bg-danger">Đã hủy</span>
                                         @elseif($order->status == 'Ordered')
-                                        <span class="badge bg-warning">Ordered</span>
+                                        <span class="badge bg-warning">Đã đặt</span>
                                         @else
-                                        <span class="badge bg-success">{{ $order->status }}</span>
+                                        <span class="badge bg-success">Đã giao</span>
                                         @endif
                                     </td>
                                     <td class="text-center">
