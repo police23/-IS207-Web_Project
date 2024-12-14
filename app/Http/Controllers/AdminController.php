@@ -337,9 +337,11 @@ class AdminController extends Controller
     public function update_order_status(Request $request) {
         $order = Order::find($request->order_id);
         $order->status = $request->order_status;
-        if ($order->status == 'delivered') {
+        
+        if ($order->status == 'Delivered') {
             $order->delivery_date = Carbon::Now();
         }
+        
         $order->save();
         return back()->with('success','Status changed successfully');
     }
