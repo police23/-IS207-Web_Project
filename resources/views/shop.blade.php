@@ -449,7 +449,7 @@
                   <a href="{{ url('phone') }}/${phone.id}"><img loading="lazy" src="{{ url('uploads/phones/thumbnails') }}/${phone.image}" width="330" height="400" alt="${phone.phone_variants_name}" class="pc__img"></a>
                 </div>
                 <div class="pc__info position-relative">
-                  <h6 class="pc__title"><a href="{{ url('phone/show') }}/${phone.id}">${phone.phone_variants_name}</a></h6>
+                  <h6 class="pc__title"><a href="{{ url('phone') }}/${phone.id}">${phone.phone_variants_name}</a></h6>
                   <div class="product-card__price d-flex">
                     <span class="money price text-secondary">${new Intl.NumberFormat('vi-VN').format(phone.regular_price)} đ</span>
                   </div>
