@@ -38,36 +38,20 @@ class PhonesImport implements ToModel, WithHeadingRow
 
         // Tạo PhoneVariant cho mỗi biến thể
         // dd($variants);
-        $counter = 1;
+        
         foreach ($variants as $variantData) {
             $storage = Storage::firstOrCreate(['storage_size' => $variantData['storage']]);
-
-            $imageUrl = $variantData['image'];
-            $uploadDir = public_path('uploads/phones/thumbnails'); 
-            $imageName = time() . '_' . $counter . '_' . basename($imageUrl);
-            $imagePath = $uploadDir . '/' . $imageName;
-            $imageContent = @file_get_contents($imageUrl);
-
-            if ($imageContent !== false) {
-                file_put_contents($imagePath, $imageContent);
-            } 
-                
-
             PhoneVariants::create([
                 'phone_variants_name' => $variantData['variant_name'],
                 'color' => $variantData['color'],
-                'image' => $imageName,
+                'image' => $variantData['image'],
                 'storage_id' => $storage->id,
                 'regular_price' => $variantData['regular_price'],
                 'sale_price' => $variantData['sale_price'],
                 'stock_status' => 'instock',
                 'phone_id' => $phone->id, // Liên kết với Phone
             ]);
-            $counter++;
         }
-
-
-
         return $phone; // Trả về model Phone vừa tạo
     }
 }
