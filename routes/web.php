@@ -90,4 +90,3 @@ Route::middleware(['auth', AuthAdmin::class])->group(function () {
     Route::delete('/admin/coupon/delete/{id}', [AdminController::class, 'deleteCoupon'])->name('admin.coupon.delete');
     
 });
-

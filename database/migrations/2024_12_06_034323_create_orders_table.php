@@ -19,12 +19,13 @@ class CreateOrdersTable extends Migration
             $table->string('status');
             $table->string('delivery_address');
             $table->string('payment_method'); // New column
+            $table->unsignedBigInteger('coupon_id')->nullable(); // Foreign key to coupons table
             $table->timestamps(); // Includes created_at and updated_at
-            // Define foreign key constraint
+            // Define foreign key constraints
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('coupon_id')->references('id')->on('coupons')->onDelete('set null');
         });
     }
-
 
     /**
      * Reverse the migrations.

@@ -48,8 +48,8 @@
                         <tr>
                             <th style="width: 5%">ID</th>
                             <th style="width: 20%">Mã giảm giá</th>
-                            <th style="width: 15%">Số tiền giảm giá</th>
-                            <th style="width: 15%">Phần trăm giảm giá</th>
+                            <th style="width: 15%">Loại giảm giá</th>
+                            <th style="width: 15%">Giá trị giảm giá</th>
                             <th style="width: 15%">Ngày hết hạn</th>
                             <th style="width: 15%">Hành động</th>
                         </tr>
@@ -59,8 +59,8 @@
                         <tr>
                             <td>{{ $coupon->id }}</td>
                             <td>{{ $coupon->code }}</td>
-                            <td>{{ $coupon->discount_amount }}</td>
-                            <td>{{ $coupon->discount_percentage }}</td>
+                            <td>{{ $coupon->type }}</td>
+                            <td>{{ $coupon->value }}</td>
                             <td>{{ $coupon->expiry_date }}</td>
                             <td>
                                 <div class="list-icon-function">
