@@ -446,7 +446,7 @@
             <div class="product-card-wrapper">
               <div class="product-card mb-3 mb-md-4 mb-xxl-5">
                 <div class="pc__img-wrapper">
-                  <a href="{{ url('phone/show') }}/${phone.id}"><img loading="lazy" src="{{ url('uploads/phones/thumbnails') }}/${phone.image}" width="330" height="400" alt="${phone.phone_variants_name}" class="pc__img"></a>
+                  <a href="{{ url('phone') }}/${phone.id}"><img loading="lazy" src="{{ url('uploads/phones/thumbnails') }}/${phone.image}" width="330" height="400" alt="${phone.phone_variants_name}" class="pc__img"></a>
                 </div>
                 <div class="pc__info position-relative">
                   <h6 class="pc__title"><a href="{{ url('phone/show') }}/${phone.id}">${phone.phone_variants_name}</a></h6>
