@@ -39,23 +39,16 @@
         <h1 class="product-single__name">{{ $phoneVariant->phone_variants_name }}</h1>
         <div class="product-single__rating">
           <div class="reviews-group d-flex">
-            <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-              <use href="#icon_star" />
-            </svg>
-            <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-              <use href="#icon_star" />
-            </svg>
-            <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-              <use href="#icon_star" />
-            </svg>
-            <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-              <use href="#icon_star" />
-            </svg>
-            <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-              <use href="#icon_star" />
-            </svg>
+            @php
+              $averageRating = $reviews->avg('rate');
+            @endphp
+            @for ($i = 0; $i < 5; $i++)
+              <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
+                <use href="#icon_star" fill="{{ $i < $averageRating ? '#ffc107' : '#ccc' }}" />
+              </svg>
+            @endfor
           </div>
-          <span class="reviews-note text-lowercase text-secondary ms-1">8k+ đánh giá</span>
+          <span class="reviews-note text-lowercase text-secondary ms-1">{{ $reviews->count() }} đánh giá ({{ number_format($averageRating, 1) }} / 5)</span>
         </div>
         <div class="product-single__price">
           <span class="current-price" style="color: red;">{{ number_format($phoneVariant->regular_price, 0, ',', '.') }} đ</span>
@@ -117,7 +110,7 @@
         </li>
         <li class="nav-item" role="presentation">
           <a class="nav-link nav-link_underscore" id="tab-reviews-tab" data-bs-toggle="tab" href="#tab-reviews"
-            role="tab" aria-controls="tab-reviews" aria-selected="false">Đánh giá (2)</a>
+            role="tab" aria-controls="tab-reviews" aria-selected="false">Đánh giá ({{ $reviews->count() }})</a>
         </li>
       </ul>
       <div class="tab-content">
@@ -165,107 +158,69 @@
         <div class="tab-pane fade" id="tab-reviews" role="tabpanel" aria-labelledby="tab-reviews-tab">
           <h2 class="product-single__reviews-title">Đánh giá</h2>
           <div class="product-single__reviews-list">
-            <div class="product-single__reviews-item">
-              <div class="customer-avatar">
-                <img loading="lazy" src="assets/images/avatar.jpg" alt="" />
-              </div>
-              <div class="customer-review">
-                <div class="customer-name">
-                  <h6>Janice Miller</h6>
-                  <div class="reviews-group d-flex">
-                    <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                      <use href="#icon_star" />
-                    </svg>
-                    <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                      <use href="#icon_star" />
-                    </svg>
-                    <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                      <use href="#icon_star" />
-                    </svg>
-                    <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                      <use href="#icon_star" />
-                    </svg>
-                    <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                      <use href="#icon_star" />
-                    </svg>
+            @if($reviews->count() == 0)
+              <p>Chưa có đánh giá nào cho sản phẩm này.</p>
+            @endif
+            @foreach($reviews as $review)
+              <div class="product-single__reviews-item">
+                <div class="customer-avatar">
+                  <img loading="lazy" src="{{ asset('assets/images/avatar.jpg') }}" alt="" />
+                </div>
+                <div class="customer-review">
+                  <div class="customer-name">
+                    <h6>{{ $review->user->fullname }}</h6>
+                    <div class="reviews-group d-flex">
+                      @for ($i = 0; $i < 5; $i++)
+                        <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
+                          <use href="#icon_star" fill="{{ $i < $review->rate ? '#ffc107' : '#ccc' }}" />
+                        </svg>
+                      @endfor
+                    </div>
+                  </div>
+                  <div class="review-date">{{ $review->created_at->format('d/m/Y') }}</div>
+                  <div class="review-text">
+                    <p>{{ $review->comment }}</p>
                   </div>
                 </div>
-                <div class="review-date">April 06, 2023</div>
-                <div class="review-text">
-                  <p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod
-                    maxime placeat facere possimus, omnis voluptas assumenda est…</p>
-                </div>
               </div>
-            </div>
-            <div class="product-single__reviews-item">
-              <div class="customer-avatar">
-                <img loading="lazy" src="assets/images/avatar.jpg" alt="" />
-              </div>
-              <div class="customer-review">
-                <div class="customer-name">
-                  <h6>Benjam Porter</h6>
-                  <div class="reviews-group d-flex">
-                    <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                      <use href="#icon_star" />
-                    </svg>
-                    <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                      <use href="#icon_star" />
-                    </svg>
-                    <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                      <use href="#icon_star" />
-                    </svg>
-                    <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                      <use href="#icon_star" />
-                    </svg>
-                    <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                      <use href="#icon_star" />
-                    </svg>
-                  </div>
-                </div>
-                <div class="review-date">April 06, 2023</div>
-                <div class="review-text">
-                  <p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod
-                    maxime placeat facere possimus, omnis voluptas assumenda est…</p>
-                </div>
-              </div>
-            </div>
+            @endforeach
           </div>
           <div class="product-single__review-form">
-            <form name="customer-review-form">
-              <div class="select-star-rating">
-                <label>Đánh giá của bạn *</label>
-                <span class="star-rating">
-                  <svg class="star-rating__star-icon" width="12" height="12" fill="#ccc" viewBox="0 0 12 12"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      d="M11.1429 5.04687C11.1429 4.84598 10.9286 4.76562 10.7679 4.73884L7.40625 4.25L5.89955 1.20312C5.83929 1.07589 5.72545 0.928571 5.57143 0.928571C5.41741 0.928571 5.30357 1.07589 5.2433 1.20312L3.73661 4.25L0.375 4.73884C0.207589 4.76562 0 4.84598 0 5.04687C0 5.16741 0.0870536 5.28125 0.167411 5.3683L2.60491 7.73884L2.02902 11.0871C2.02232 11.1339 2.01563 11.1741 2.01563 11.221C2.01563 11.3951 2.10268 11.5558 2.29688 11.5558C2.39063 11.5558 2.47768 11.5223 2.56473 11.4754L5.57143 9.89509L8.57813 11.4754C8.65848 11.5223 8.75223 11.5558 8.84598 11.5558C9.04018 11.5558 9.12054 11.3951 9.12054 11.221C9.12054 11.1741 9.12054 11.1339 9.11384 11.0871L8.53795 7.73884L10.9688 5.3683C11.0558 5.28125 11.1429 5.16741 11.1429 5.04687Z" />
-                  </svg>
-                  <svg class="star-rating__star-icon" width="12" height="12" fill="#ccc" viewBox="0 0 12 12"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      d="M11.1429 5.04687C11.1429 4.84598 10.9286 4.76562 10.7679 4.73884L7.40625 4.25L5.89955 1.20312C5.83929 1.07589 5.72545 0.928571 5.57143 0.928571C5.41741 0.928571 5.30357 1.07589 5.2433 1.20312L3.73661 4.25L0.375 4.73884C0.207589 4.76562 0 4.84598 0 5.04687C0 5.16741 0.0870536 5.28125 0.167411 5.3683L2.60491 7.73884L2.02902 11.0871C2.02232 11.1339 2.01563 11.1741 2.01563 11.221C2.01563 11.3951 2.10268 11.5558 2.29688 11.5558C2.39063 11.5558 2.47768 11.5223 2.56473 11.4754L5.57143 9.89509L8.57813 11.4754C8.65848 11.5223 8.75223 11.5558 8.84598 11.5558C9.04018 11.5558 9.12054 11.3951 9.12054 11.221C9.12054 11.1741 9.12054 11.1339 9.11384 11.0871L8.53795 7.73884L10.9688 5.3683C11.0558 5.28125 11.1429 5.16741 11.1429 5.04687Z" />
-                  </svg>
-                  <svg class="star-rating__star-icon" width="12" height="12" fill="#ccc" viewBox="0 0 12 12"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      d="M11.1429 5.04687C11.1429 4.84598 10.9286 4.76562 10.7679 4.73884L7.40625 4.25L5.89955 1.20312C5.83929 1.07589 5.72545 0.928571 5.57143 0.928571C5.41741 0.928571 5.30357 1.07589 5.2433 1.20312L3.73661 4.25L0.375 4.73884C0.207589 4.76562 0 4.84598 0 5.04687C0 5.16741 0.0870536 5.28125 0.167411 5.3683L2.60491 7.73884L2.02902 11.0871C2.02232 11.1339 2.01563 11.1741 2.01563 11.221C2.01563 11.3951 2.10268 11.5558 2.29688 11.5558C2.39063 11.5558 2.47768 11.5223 2.56473 11.4754L5.57143 9.89509L8.57813 11.4754C8.65848 11.5223 8.75223 11.5558 8.84598 11.5558C9.04018 11.5558 9.12054 11.3951 9.12054 11.221C9.12054 11.1741 9.12054 11.1339 9.11384 11.0871L8.53795 7.73884L10.9688 5.3683C11.0558 5.28125 11.1429 5.16741 11.1429 5.04687Z" />
-                  </svg>
-                  <svg class="star-rating__star-icon" width="12" height="12" fill="#ccc" viewBox="0 0 12 12"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      d="M11.1429 5.04687C11.1429 4.84598 10.9286 4.76562 10.7679 4.73884L7.40625 4.25L5.89955 1.20312C5.83929 1.07589 5.72545 0.928571 5.57143 0.928571C5.41741 0.928571 5.30357 1.07589 5.2433 1.20312L3.73661 4.25L0.375 4.73884C0.207589 4.76562 0 4.84598 0 5.04687C0 5.16741 0.0870536 5.28125 0.167411 5.3683L2.60491 7.73884L2.02902 11.0871C2.02232 11.1339 2.01563 11.1741 2.01563 11.221C2.01563 11.3951 2.10268 11.5558 2.29688 11.5558C2.39063 11.5558 2.47768 11.5223 2.56473 11.4754L5.57143 9.89509L8.57813 11.4754C8.65848 11.5223 8.75223 11.5558 8.84598 11.5558C9.04018 11.5558 9.12054 11.3951 9.12054 11.221C9.12054 11.1741 9.12054 11.1339 9.11384 11.0871L8.53795 7.73884L10.9688 5.3683C11.0558 5.28125 11.1429 5.16741 11.1429 5.04687Z" />
-                  </svg>
-                </span>
-                <input type="hidden" id="form-input-rating" value="" />
-              </div>
-              <div class="mb-4">
-                <textarea id="form-input-review" class="form-control form-control_gray" placeholder="Đánh giá của bạn"
-                  cols="30" rows="8"></textarea>
-              </div>
-              <div class="form-action">
-                <button type="submit" class="btn btn-primary">Gửi đánh giá</button>
-              </div>
-            </form>
+            @if(auth()->check())
+              @php
+                $canReview = auth()->user()->canReview($phoneVariant->id);
+                $existingReview = auth()->user()->ratings()->where('phone_variant_id', $phoneVariant->id)->first();
+              @endphp
+              @if($canReview || $existingReview)
+                <form name="customer-review-form" method="post" action="{{ $existingReview ? route('phone.update_review', ['id' => $phoneVariant->id]) : route('phone.add_review', ['id' => $phoneVariant->id]) }}">
+                  @csrf
+                  @if($existingReview)
+                    @method('PUT')
+                  @endif
+                  <div class="select-star-rating">
+                    <label>Đánh giá của bạn *</label>
+                    <span class="star-rating">
+                      @for ($i = 1; $i <= 5; $i++)
+                        <svg class="star-rating__star-icon" width="12" height="12" fill="{{ $existingReview && $i <= $existingReview->rate ? '#ffc107' : '#ccc' }}" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" data-value="{{ $i }}">
+                          <path d="M11.1429 5.04687C11.1429 4.84598 10.9286 4.76562 10.7679 4.73884L7.40625 4.25L5.89955 1.20312C5.83929 1.07589 5.72545 0.928571 5.57143 0.928571C5.41741 0.928571 5.30357 1.07589 5.2433 1.20312L3.73661 4.25L0.375 4.73884C0.207589 4.76562 0 4.84598 0 5.04687C0 5.16741 0.0870536 5.28125 0.167411 5.3683L2.60491 7.73884L2.02902 11.0871C2.02232 11.1339 2.01563 11.1741 2.01563 11.221C2.01563 11.3951 2.10268 11.5558 2.29688 11.5558C2.39063 11.5558 2.47768 11.5223 2.56473 11.4754L5.57143 9.89509L8.57813 11.4754C8.65848 11.5223 8.75223 11.5558 8.84598 11.5558C9.04018 11.5558 9.12054 11.3951 9.12054 11.221C9.12054 11.1741 9.12054 11.1339 9.11384 11.0871L8.53795 7.73884L10.9688 5.3683C11.0558 5.28125 11.1429 5.16741 11.1429 5.04687Z" />
+                        </svg>
+                      @endfor
+                    </span>
+                    <input type="hidden" id="form-input-rating" name="rate" value="{{ $existingReview ? $existingReview->rate : '' }}" />
+                  </div>
+                  <div class="mb-4">
+                    <textarea id="form-input-review" class="form-control form-control_gray" name="comment" placeholder="Đánh giá của bạn" cols="30" rows="8">{{ $existingReview ? $existingReview->comment : '' }}</textarea>
+                  </div>
+                  <div class="form-action">
+                    <button type="submit" class="btn btn-primary">{{ $existingReview ? 'Cập nhật đánh giá' : 'Gửi đánh giá' }}</button>
+                  </div>
+                </form>
+              @else
+                <p>Bạn chỉ có thể đánh giá sản phẩm sau khi mua hàng.</p>
+              @endif
+            @else
+              <p>Vui lòng <a href="{{ route('login') }}">đăng nhập</a> để đánh giá sản phẩm.</p>
+            @endif
           </div>
         </div>
       </div>
@@ -285,6 +240,16 @@
         }, 3000);
       }, 3000);
     }
+
+    document.querySelectorAll('.star-rating__star-icon').forEach(star => {
+      star.addEventListener('click', function() {
+        const rating = this.getAttribute('data-value');
+        document.getElementById('form-input-rating').value = rating;
+        document.querySelectorAll('.star-rating__star-icon').forEach(s => {
+          s.setAttribute('fill', s.getAttribute('data-value') <= rating ? '#ffc107' : '#ccc');
+        });
+      });
+    });
   });
 </script>
 

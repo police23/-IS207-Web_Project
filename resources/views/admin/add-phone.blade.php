@@ -203,7 +203,6 @@
                                                 <th>Storage</th>
                                                 <th>Quantity</th>
                                                 <th>Price</th>
-                                                <th>Sale Price</th>
                                                 <th>Image</th>
                                                 <th>Stock</th>
                                                 <th>Feature</th>
@@ -336,19 +335,6 @@
                     required>
             `;
 
-            // Cột sale
-            const priceSaleCell = document.createElement('td');
-            priceSaleCell.innerHTML = `
-                <input 
-                    type="number" 
-                    name="sale_price[]" 
-                    class="form-control" 
-                    placeholder="Enter sale price" 
-                    step="0.01" 
-                    min="0" 
-                    required>
-            `;
-
             // Cột tải ảnh
             const imageCell = document.createElement('td');
             imageCell.innerHTML = `
@@ -413,7 +399,6 @@
             row.appendChild(storageCell);
             row.appendChild(quantityCell);
             row.appendChild(priceCell);
-            row.appendChild(priceSaleCell);
             row.appendChild(imageCell);
             row.appendChild(stockCell);
             row.appendChild(featureCell);

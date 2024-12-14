@@ -45,4 +45,23 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function ratings() {
+        return $this->hasMany(Rating::class, 'user_id');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'user_id');
+    }
+
+    public function canReview($phoneVariantId)
+    {
+        return $this->orders()
+            ->whereHas('orderDetails', function ($query) use ($phoneVariantId) {
+                $query->where('phone_variant_id', $phoneVariantId)
+                      ->where('status', 'Delivered');
+            })
+            ->exists();
+    }
 }

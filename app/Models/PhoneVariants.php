@@ -29,5 +29,8 @@ class PhoneVariants extends Model
     public function storage() {
         return $this->belongsTo(Storage::class, 'storage_id');
     }
+    public function ratings() {
+        return $this->hasMany(Rating::class, 'phone_variant_id');
+    }
     
 }

@@ -47,12 +47,12 @@
                     </div>
                     <div class="center">
                         <div class="center-item">
-                            <div class="center-heading">Main Home</div>
+                            <div class="center-heading">Trang chủ</div>
                             <ul class="menu-list">
                                 <li class="menu-item">
                                     <a href="{{ route('admin.index') }}" class="">
                                         <div class="icon"><i class="icon-grid"></i></div>
-                                        <div class="text">Dashboard</div>
+                                        <div class="text">Bảng điều khiển</div>
                                     </a>
                                 </li>
                             </ul>
@@ -62,17 +62,17 @@
                                 <li class="menu-item has-children">
                                     <a href="javascript:void(0);" class="menu-item-button">
                                         <div class="icon"><i class="icon-layers"></i></div>
-                                        <div class="text">Brand</div>
+                                        <div class="text">Hãng</div>
                                     </a>
                                     <ul class="sub-menu">
                                         <li class="sub-menu-item">
                                             <a href="{{ route('admin.brand.add') }}" class="">
-                                                <div class="text">New Brand</div>
+                                                <div class="text">Thêm hãng</div>
                                             </a>
                                         </li>
                                         <li class="sub-menu-item">
                                             <a href="{{ route('admin.brands') }}" class="">
-                                                <div class="text">Brands</div>
+                                                <div class="text">Hãng</div>
                                             </a>
                                         </li>
                                     </ul>
@@ -81,73 +81,49 @@
                                 <li class="menu-item has-children">
                                     <a href="javascript:void(0);" class="menu-item-button">
                                         <div class="icon"><i class="icon-shopping-cart"></i></div>
-                                        <div class="text">Phones</div>
+                                        <div class="text">Điện thoại</div>
                                     </a>
                                     <ul class="sub-menu">
                                         <li class="sub-menu-item">
                                             <a href="{{ route('admin.phone.add') }}" class="">
-                                                <div class="text">Add Phone</div>
+                                                <div class="text">Thêm điện thoại</div>
                                             </a>
                                         </li>
                                         <li class="sub-menu-item">
                                             <a href="{{ route('admin.phones') }}" class="">
-                                                <div class="text">Phones</div>
+                                                <div class="text">Điện thoại</div>
                                             </a>
                                         </li>
                                     </ul>
                                 </li>
                                 
-                                <li class="menu-item has-children">
-                                    <a href="javascript:void(0);" class="menu-item-button">
+                                <li class="menu-item">
+                                    <a href="{{ route('admin.orders') }}" class="">
                                         <div class="icon"><i class="icon-file-plus"></i></div>
-                                        <div class="text">Order</div>
-                                    </a>
-                                    <ul class="sub-menu">
-                                        <li class="sub-menu-item">
-                                            <a href="{{ route('admin.orders') }}" class="">
-                                                <div class="text">Orders</div>
-                                            </a>
-                                        </li>
-                                        <li class="sub-menu-item">
-                                            <a href="order-tracking.html" class="">
-                                                <div class="text">Order tracking</div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="menu-item">
-                                    <a href="slider.html" class="">
-                                        <div class="icon"><i class="icon-image"></i></div>
-                                        <div class="text">Slider</div>
+                                        <div class="text">Đơn hàng</div>
                                     </a>
                                 </li>
+                    
                                 <li class="menu-item">
-                                    <a href="coupons.html" class="">
-                                        <div class="icon"><i class="icon-grid"></i></div>
-                                        <div class="text">Coupns</div>
-                                    </a>
-                                </li>
-
-                                <li class="menu-item">
-                                    <a href="users.html" class="">
+                                    <a href="{{ route('admin.customers') }}" class="">
                                         <div class="icon"><i class="icon-user"></i></div>
-                                        <div class="text">User</div>
+                                        <div class="text">Người dùng</div>
                                     </a>
                                 </li>
 
                                 <li class="menu-item">
-                                    <a href="settings.html" class="">
+                                    <a href="{{ route('admin.discount') }}" class="">
                                         <div class="icon"><i class="icon-settings"></i></div>
-                                        <div class="text">Settings</div>
+                                        <div class="text">Khuyến mãi</div>
                                     </a>
                                 </li>
 
                                 <li class="menu-item">
                                     <form method="POST" action="{{ route('logout') }}" id="logout-form">
                                     @csrf
-                                    <a href="#" class="" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <a href="#" class="" onclick="event.preventDefault(); if(confirm('Bạn chắc chắn muốn đăng xuất?')) { document.getElementById('logout-form').submit(); }">
                                         <div class="icon"><i class="icon-settings"></i></div>
-                                        <div class="text">Log out</div>
+                                        <div class="text">Đăng xuất</div>
                                     </a>
                                     </form>
                                 </li>
@@ -183,7 +159,7 @@
 
                                 <form class="form-search flex-grow">
                                     <fieldset class="name">
-                                        <input type="text" placeholder="Search here..." class="show-search" name="name"
+                                        <input type="text" placeholder="Tìm kiếm ở đây..." class="show-search" name="name"
                                             tabindex="2" value="" aria-required="true" required="">
                                     </fieldset>
                                     <div class="button-submit">
@@ -192,7 +168,7 @@
                                     <div class="box-content-search" id="box-content-search">
                                         <ul class="mb-24">
                                             <li class="mb-14">
-                                                <div class="body-title">Top selling product</div>
+                                                <div class="body-title">Sản phẩm bán chạy nhất</div>
                                             </li>
                                             <li class="mb-14">
                                                 <div class="divider"></div>
@@ -205,8 +181,7 @@
                                                         </div>
                                                         <div class="flex items-center justify-between gap20 flex-grow">
                                                             <div class="name">
-                                                                <a href="product-list.html" class="body-text">Dog Food
-                                                                    Rachael Ray Nutrish®</a>
+                                                                <a href="product-list.html" class="body-text">Thức ăn cho chó Rachael Ray Nutrish®</a>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -219,8 +194,7 @@
                                                         </div>
                                                         <div class="flex items-center justify-between gap20 flex-grow">
                                                             <div class="name">
-                                                                <a href="product-list.html" class="body-text">Natural
-                                                                    Dog Food Healthy Dog Food</a>
+                                                                <a href="product-list.html" class="body-text">Thức ăn cho chó tự nhiên</a>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -233,8 +207,7 @@
                                                         </div>
                                                         <div class="flex items-center justify-between gap20 flex-grow">
                                                             <div class="name">
-                                                                <a href="product-list.html" class="body-text">Freshpet
-                                                                    Healthy Dog Food and Cat</a>
+                                                                <a href="product-list.html" class="body-text">Thức ăn tươi cho chó và mèo</a>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -243,7 +216,7 @@
                                         </ul>
                                         <ul class="">
                                             <li class="mb-14">
-                                                <div class="body-title">Order product</div>
+                                                <div class="body-title">Đặt hàng sản phẩm</div>
                                             </li>
                                             <li class="mb-14">
                                                 <div class="divider"></div>
@@ -256,8 +229,7 @@
                                                         </div>
                                                         <div class="flex items-center justify-between gap20 flex-grow">
                                                             <div class="name">
-                                                                <a href="product-list.html" class="body-text">Sojos
-                                                                    Crunchy Natural Grain Free...</a>
+                                                                <a href="product-list.html" class="body-text">Sojos Crunchy Natural Grain Free...</a>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -270,8 +242,7 @@
                                                         </div>
                                                         <div class="flex items-center justify-between gap20 flex-grow">
                                                             <div class="name">
-                                                                <a href="product-list.html" class="body-text">Kristin
-                                                                    Watson</a>
+                                                                <a href="product-list.html" class="body-text">Admin</a>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -284,8 +255,7 @@
                                                         </div>
                                                         <div class="flex items-center justify-between gap20 flex-grow">
                                                             <div class="name">
-                                                                <a href="product-list.html" class="body-text">Mega
-                                                                    Pumpkin Bone</a>
+                                                                <a href="product-list.html" class="body-text">Mega Pumpkin Bone</a>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -298,8 +268,7 @@
                                                         </div>
                                                         <div class="flex items-center justify-between gap20 flex-grow">
                                                             <div class="name">
-                                                                <a href="product-list.html" class="body-text">Mega
-                                                                    Pumpkin Bone</a>
+                                                                <a href="product-list.html" class="body-text">Mega Pumpkin Bone</a>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -324,7 +293,7 @@
                                         <ul class="dropdown-menu dropdown-menu-end has-content"
                                             aria-labelledby="dropdownMenuButton2">
                                             <li>
-                                                <h6>Notifications</h6>
+                                                <h6>Thông báo</h6>
                                             </li>
                                             <li>
                                                 <div class="message-item item-1">
@@ -332,7 +301,7 @@
                                                         <i class="icon-noti-1"></i>
                                                     </div>
                                                     <div>
-                                                        <div class="body-title-2">Discount available</div>
+                                                        <div class="body-title-2">Giảm giá có sẵn</div>
                                                         <div class="text-tiny">Morbi sapien massa, ultricies at rhoncus
                                                             at, ullamcorper nec diam</div>
                                                     </div>
@@ -344,7 +313,7 @@
                                                         <i class="icon-noti-2"></i>
                                                     </div>
                                                     <div>
-                                                        <div class="body-title-2">Account has been verified</div>
+                                                        <div class="body-title-2">Tài khoản đã được xác minh</div>
                                                         <div class="text-tiny">Mauris libero ex, iaculis vitae rhoncus
                                                             et</div>
                                                     </div>
@@ -356,7 +325,7 @@
                                                         <i class="icon-noti-3"></i>
                                                     </div>
                                                     <div>
-                                                        <div class="body-title-2">Order shipped successfully</div>
+                                                        <div class="body-title-2">Đơn hàng đã được giao thành công</div>
                                                         <div class="text-tiny">Integer aliquam eros nec sollicitudin
                                                             sollicitudin</div>
                                                     </div>
@@ -368,13 +337,13 @@
                                                         <i class="icon-noti-4"></i>
                                                     </div>
                                                     <div>
-                                                        <div class="body-title-2">Order pending: <span>ID 305830</span>
+                                                        <div class="body-title-2">Đơn hàng đang chờ: <span>ID 305830</span>
                                                         </div>
                                                         <div class="text-tiny">Ultricies at rhoncus at ullamcorper</div>
                                                     </div>
                                                 </div>
                                             </li>
-                                            <li><a href="#" class="tf-button w-full">View all</a></li>
+                                            <li><a href="#" class="tf-button w-full">Xem tất cả</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -391,8 +360,8 @@
                                                     <img src="images/avatar/user-1.png" alt="">
                                                 </span>
                                                 <span class="flex flex-column">
-                                                    <span class="body-title mb-2">Kristin Watson</span>
-                                                    <span class="text-tiny">Admin</span>
+                                                    <span class="body-title mb-2">Admin</span>
+                                    
                                                 </span>
                                             </span>
                                         </button>
@@ -403,7 +372,7 @@
                                                     <div class="icon">
                                                         <i class="icon-user"></i>
                                                     </div>
-                                                    <div class="body-title-2">Account</div>
+                                                    <div class="body-title-2">Tài khoản</div>
                                                 </a>
                                             </li>
                                             <li>
@@ -411,7 +380,7 @@
                                                     <div class="icon">
                                                         <i class="icon-mail"></i>
                                                     </div>
-                                                    <div class="body-title-2">Inbox</div>
+                                                    <div class="body-title-2">Hộp thư</div>
                                                     <div class="number">27</div>
                                                 </a>
                                             </li>
@@ -420,7 +389,7 @@
                                                     <div class="icon">
                                                         <i class="icon-file-text"></i>
                                                     </div>
-                                                    <div class="body-title-2">Taskboard</div>
+                                                    <div class="body-title-2">Bảng công việc</div>
                                                 </a>
                                             </li>
                                             <li>
@@ -428,7 +397,7 @@
                                                     <div class="icon">
                                                         <i class="icon-headphones"></i>
                                                     </div>
-                                                    <div class="body-title-2">Support</div>
+                                                    <div class="body-title-2">Hỗ trợ</div>
                                                 </a>
                                             </li>
                                             <li>
@@ -436,7 +405,7 @@
                                                     <div class="icon">
                                                         <i class="icon-log-out"></i>
                                                     </div>
-                                                    <div class="body-title-2">Log out</div>
+                                                    <div class="body-title-2">Đăng xuất</div>
                                                 </a>
                                             </li>
                                         </ul>
@@ -452,7 +421,7 @@
 
 
                         <div class="bottom-page">
-                            <div class="body-text">Copyright © 2024 SurfsideMedia</div>
+                            <div class="body-text">Bản quyền © 2024 WebFone</div>
                         </div>
                     </div>
 
@@ -480,7 +449,7 @@
                             data: [0.00, 0.00, 0.00, 0.00, 0.00, 273.22, 208.12, 0.00, 0.00, 0.00, 0.00, 0.00]
                         }, {
                             name: 'Pending',
-                            data: [0.00, 0.00, 0.00, 0.00, 0.00, 273.22, 208.12, 0.00, 0.00, 0.00, 0.00, 0.00]
+                            data: [0.00, 0.00, 0.00, 0.00, 0.00, 273.22, 208.12, 0.00, 0.00, 0.00, 0.00]
                         },
                         {
                             name: 'Delivered',

@@ -6,6 +6,7 @@ use App\Models\PhoneVariants; // Import model PhoneVariants
 use Illuminate\Http\Request;
 use App\Models\Brand;
 use App\Models\Phone;
+use App\Models\Rating;
 
 class ShopController extends Controller
 {
@@ -91,10 +92,11 @@ class ShopController extends Controller
             $item->image = explode(',', $item->images)[0];
             return $item;
         });
+
         if ($request->ajax()) {
             return response()->json($phoneVariants);
         }
-    
+
         return view('shop', compact('brands', 'phoneVariants'));
     }
 
@@ -106,8 +108,9 @@ class ShopController extends Controller
         $phoneVariants = PhoneVariants::where('phone_id', $phone->id)->get();
         $colors = $phoneVariants->pluck('color')->unique()->implode(',');
         $storages = PhoneVariants::where('phone_id', $phone->id)->with('storage')->get()->pluck('storage.storage_size')->unique();
+        $reviews = Rating::where('phone_variant_id', $id)->with('user')->get();
         
-        return view('details', compact('phone', 'phoneVariants', 'phoneVariant', 'colors', 'storages'));
+        return view('details', compact('phone', 'phoneVariants', 'phoneVariant', 'colors', 'storages', 'reviews'));
     }
 }
 

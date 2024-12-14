@@ -3,7 +3,7 @@
 
 <form id="update-cart-form" action="{{ route('cart.update') }}" method="POST">
   @csrf
-  <main class="pt-90">
+  <main class="pt-80">
     <div class="mb-4 pb-4"></div>
     <section class="shop-checkout container cart-expanded product-list-expanded">
       <h2 class="page-title">Giỏ hàng</h2>
@@ -32,8 +32,7 @@
       </div>
       <div class="shopping-cart">
         <div class="cart-table__wrapper">
-          @if($cart && $cart->cartDetails->isNotEmpty())
-          
+          @if($cart && $cart->cartDetails->isNotEmpty())        
           <table class="cart-table">
             <thead>
               <tr>
@@ -55,7 +54,7 @@
                     @if($item->phoneVariants && $item->phoneVariants->phone)
                       <img loading="lazy" src="{{ url('uploads/phones/thumbnails/'.$item->phoneVariants->image)}}" width="120" height="120" alt="{{ $item->phoneVariants->phone_variants_name }}" />
                     @else
-                      <img loading="lazy" src="{{ url('uploads/phones/thumbnails/default.png')}}" width="120" height="120" alt="No image available" />
+                      <img loading="lazy" src="{{ url('uploads/phones/thumbnails/default.png')}}" width="120" height="120" alt="Không có hình ảnh" />
                     @endif
                   </div>
                 </td>
@@ -106,7 +105,7 @@
             </tbody>
           </table>
           @else
-          <div class="empty-cart text-center d-flex flex-column align-items-center justify-content-center" style="height: 300px;">
+          <div class="empty-cart text-center d-flex flex-column align-items-center justify-content-center">
             <i class="fas fa-shopping-cart fa-5x"></i>
             <p style="font-size: 1.5rem;"><strong>Giỏ hàng trống</strong><br>Không có sản phẩm nào trong giỏ hàng</p>
             <a href="{{ url('/') }}" class="btn btn-primary mt-3" style="margin-top: 2cm; border-radius: 25px;">Về trang chủ</a>
@@ -181,7 +180,7 @@
       border-bottom: none !important;
     }
     .empty-cart {
-      margin-top: 50px;
+      margin-top: 100px; /* Adjusted margin-top to center the empty cart section */
     }
     .empty-cart i {
       color: #ccc;

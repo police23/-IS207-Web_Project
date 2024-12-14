@@ -13,19 +13,24 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ReviewController;
 
 Auth::routes(['register' => true]);
 
-Route::get('/', [HomeController::class, 'index'])->name(name: 'home.index');
+Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/shop',[ShopController::class,'index'])->name('shop.index');
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
 Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/apply-coupon', [CartController::class, 'applyCoupon'])->name('cart.applyCoupon');
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 Route::get('/phone/{id}', [ShopController::class, 'show'])->name('phone.show');
 Route::post('/phone/{id}/add-to-cart', [CartController::class, 'add'])->name('phone.add_to_cart');
+Route::post('/phone/{id}/add-review', [ReviewController::class, 'store'])->name('phone.add_review');
+Route::post('/phone/{id}/can-review', [ReviewController::class, 'canReview'])->name('phone.can_review');
+Route::put('/phone/{id}/update-review', [ReviewController::class, 'update'])->name('phone.update_review');
 Route::get('/order-confirmation', [CheckoutController::class, 'orderConfirmation'])->name('order.confirmation');
 Route::get('/about', [AboutController::class, 'index'])->name('about.index');
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login.submit');
@@ -71,5 +76,18 @@ Route::middleware(['auth', AuthAdmin::class])->group(function () {
     Route::get('/admin/orders', [AdminController::class,'orders'])->name('admin.orders');
     Route::get('/admin/order/{order_id}/details', [AdminController::class,'order_details'])->name('admin.order.details');
     Route::put('/admin/order/update-status', [AdminController::class, 'update_order_status'])->name('admin.order.status.update');
+
+    Route::get('/admin/customers', [AdminController::class, 'customers'])->name('admin.customers');
+    Route::get('/admin/customer/edit/{id}', [AdminController::class, 'editCustomer'])->name('admin.customer.edit');
+    Route::put('/admin/customer/update/{id}', [AdminController::class, 'updateCustomer'])->name('admin.customer.update');
+    Route::delete('/admin/customer/delete/{id}', [AdminController::class, 'deleteCustomer'])->name('admin.customer.delete');
+    Route::get('/admin/discount', [AdminController::class, 'discount'])->name('admin.discount');
+    Route::get('/admin/coupons', [AdminController::class, 'coupons'])->name('admin.coupons');
+    Route::get('/admin/coupon/add', [AdminController::class, 'addCoupon'])->name('admin.coupon.add');
+    Route::post('/admin/coupon/store', [AdminController::class, 'storeCoupon'])->name('admin.coupon.store');
+    Route::get('/admin/coupon/edit/{id}', [AdminController::class, 'editCoupon'])->name('admin.coupon.edit');
+    Route::put('/admin/coupon/update/{id}', [AdminController::class, 'updateCoupon'])->name('admin.coupon.update');
+    Route::delete('/admin/coupon/delete/{id}', [AdminController::class, 'deleteCoupon'])->name('admin.coupon.delete');
+    
 });
 

@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\OrderDetails;
 use App\Models\Phone;
 use App\Models\PhoneVariants;
+use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
@@ -13,6 +14,8 @@ use App\Models\Brand;
 use App\Models\Storage;
 use App\Imports\PhonesImport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\Coupon;
+
 class AdminController extends Controller
 {
     //
@@ -21,7 +24,7 @@ class AdminController extends Controller
     }
 
     public function brands() {
-        $brands = Brand::orderBy('id','desc')->paginate(10);
+        $brands = Brand::orderBy('id','asc')->paginate(10);
         return view('admin.brands', compact('brands'));
     }
 
@@ -88,7 +91,7 @@ class AdminController extends Controller
             'colors'=> 'required',
             'quantity'=> 'required',
             'regular_price'=> 'required',
-            'sale_price'=> 'required',
+            // 'sale_price'=> 'required',
             'color'=> 'required',
             'storage' => 'required|array|min:1',
             'storages' => 'required|array|min:1',
@@ -113,7 +116,7 @@ class AdminController extends Controller
         $phoneVariantsStorages = $request->input('storages');
         $quantities = $request->input('quantity');
         $regularPrices = $request->input('regular_price');
-        $salePrices = $request->input('sale_price');
+       
         $stockStatuses = $request->input('stock_status');
         $featuredStatuses = $request->input('featured');
         $images = $request->file('image'); // Lấy file ảnh nếu có
@@ -130,7 +133,7 @@ class AdminController extends Controller
             $phoneVariant->storage_id = $phoneVariantsStorages[$index];
             $phoneVariant->quantity = $quantities[$index];
             $phoneVariant->regular_price = $regularPrices[$index];
-            $phoneVariant->sale_price = $salePrices[$index];
+            //$phoneVariant->sale_price = $salePrices[$index];
             $phoneVariant->stock_status = $stockStatuses[$index];
             $phoneVariant->featured = $featuredStatuses[$index];
             
@@ -322,7 +325,7 @@ class AdminController extends Controller
     }
 
     // Sắp xếp và phân trang
-    $orders = $query->orderBy('created_at', 'desc')->paginate(12);
+    $orders = $query->orderBy('created_at', 'asc')->paginate(12);
 
     // Trả về view với dữ liệu
     return view('admin.orders', compact('orders'));
@@ -330,19 +333,102 @@ class AdminController extends Controller
 
     public function order_details($order_id) {
         $order = Order::find($order_id);
-        $orderDetails = OrderDetails::where('order_id', $order_id)->orderBy('id','desc')->paginate(12);
+        $orderDetails = OrderDetails::where('order_id', $order_id)->orderBy('id','asc')->paginate(12);
         return view('admin.order-details', compact('order','orderDetails'));
     } 
 
     public function update_order_status(Request $request) {
         $order = Order::find($request->order_id);
         $order->status = $request->order_status;
-        
         if ($order->status == 'Delivered') {
             $order->delivery_date = Carbon::Now();
         }
-        
         $order->save();
         return back()->with('success','Status changed successfully');
+    }
+
+    public function customers() {
+        $users = User::where('role', 'USER')->orderBy('id', 'asc')->paginate(10);
+        return view('admin.customer', compact('users'));
+    }
+
+    public function editCustomer($id) {
+        $user = User::find($id);
+        return view('admin.edit-customer', compact('user'));
+    }
+
+    public function updateCustomer(Request $request, $id) {
+        $request->validate([
+            'username' => 'required|string|max:255',
+            'fullname' => 'nullable|string|max:255',
+            'gender' => 'required|integer',
+            'address' => 'nullable|string|max:255',
+            'phonenumber' => 'nullable|string|max:15',
+            'email' => 'required|string|email|max:255',
+        ]);
+
+        $user = User::find($id);
+        $user->update($request->only(['username', 'fullname', 'gender', 'address', 'phonenumber', 'email']));
+
+        return redirect()->route('admin.customers')->with('success', 'Customer updated successfully!');
+    }
+
+    public function deleteCustomer($id) {
+        $user = User::find($id);
+        $user->delete();
+        return redirect()->route('admin.customers')->with('success', 'Customer deleted successfully!');
+    }
+
+    public function discount() {
+        $coupons = Coupon::orderBy('id', 'asc')->paginate(10);
+        return view('admin.discount', compact('coupons'));
+    }
+
+    public function addCoupon()
+    {
+        return view('admin.add-coupon');
+    }
+
+    public function storeCoupon(Request $request)
+    {
+        $request->validate([
+            'code' => 'required|unique:coupons,code',
+            'discount_amount' => 'nullable|numeric',
+            'discount_percentage' => 'nullable|integer',
+            'expiry_date' => 'nullable|date',
+        ]);
+
+        Coupon::create($request->all());
+
+        return redirect()->route('admin.discount')->with('success', 'Coupon added successfully!');
+    }
+
+    public function editCoupon($id)
+    {
+        $coupon = Coupon::find($id);
+        return view('admin.edit-coupon', compact('coupon'));
+    }
+
+    public function updateCoupon(Request $request, $id)
+    {
+        $request->validate([
+            'code' => 'required|unique:coupons,code,' . $id,
+            'discount_amount' => 'nullable|numeric',
+            'discount_percentage' => 'nullable|integer',
+            'expiry_date' => 'nullable|date',
+        ]);
+
+        $coupon = Coupon::find($id);
+        $coupon->update($request->all());
+
+        return redirect()->route('admin.discount')->with('success', 'Coupon updated successfully!');
+    }
+
+    public function deleteCoupon($id)
+    {
+        $coupon = Coupon::find($id);
+        $coupon->delete();
+
+        return redirect()->route('admin.discount')->with('success', 'Coupon deleted successfully!');
     }
 }

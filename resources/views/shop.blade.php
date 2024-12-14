@@ -211,11 +211,11 @@
               <div class="price-range__info d-flex align-items-center mt-2">
                 <div class="me-auto">
                   <span class="text-secondary">Mức thấp nhất: </span>
-                  <span class="price-range__min">200.000đ</span>
+                  <span class="price-range__min">{{ number_format(200000, 0, ',', '.') }}đ</span>
                 </div>
                 <div>
                   <span class="text-secondary">Mức cao nhất: </span>
-                  <span class="price-range__max">50.000.000đ</span>
+                  <span class="price-range__max">{{ number_format(50000000, 0, ',', '.') }}đ</span>
                 </div>
               </div>
             </div>
@@ -423,6 +423,51 @@
 
     productsGrid.innerHTML = '';
     products.forEach(product => productsGrid.appendChild(product));
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const filterForm = document.getElementById('filterForm');
+    const productsGrid = document.getElementById('products-grid');
+
+    const fetchFilteredProducts = () => {
+      const formData = new FormData(filterForm);
+      const queryString = new URLSearchParams(formData).toString();
+
+      fetch(`{{ route('shop.index') }}?${queryString}`, {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        productsGrid.innerHTML = '';
+        data.forEach(phone => {
+          const productCard = `
+            <div class="product-card-wrapper">
+              <div class="product-card mb-3 mb-md-4 mb-xxl-5">
+                <div class="pc__img-wrapper">
+                  <a href="{{ url('phone/show') }}/${phone.id}"><img loading="lazy" src="{{ url('uploads/phones/thumbnails') }}/${phone.image}" width="330" height="400" alt="${phone.phone_variants_name}" class="pc__img"></a>
+                </div>
+                <div class="pc__info position-relative">
+                  <h6 class="pc__title"><a href="{{ url('phone/show') }}/${phone.id}">${phone.phone_variants_name}</a></h6>
+                  <div class="product-card__price d-flex">
+                    <span class="money price text-secondary">${new Intl.NumberFormat('vi-VN').format(phone.regular_price)} đ</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+          productsGrid.insertAdjacentHTML('beforeend', productCard);
+        });
+      });
+    };
+
+    filterForm.addEventListener('change', fetchFilteredProducts);
+
+    filterForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      fetchFilteredProducts();
+    });
   });
 </script>
 
