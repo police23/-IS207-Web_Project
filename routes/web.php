@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CartController;
@@ -45,6 +46,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/account-orders', [UserController::class, 'orders'])->name('account.orders');
     Route::get('/account-order-details/{id}', [UserController::class, 'orderDetails'])->name('account.order_details');
     Route::put('/account-order/cancel-order/{order}', [OrderController::class, 'cancelOrder'])->name('account.cancel_order');
+    Route::get('/payment/vnpay', [PaymentController::class,'redirectToVNPAY'])->name('payment.vnpay');
+    Route::get('/payment/vnpay/return', [PaymentController::class,'handleVNPAYReturn'])->name('payment.vnpay.return');
 });
 
 Route::middleware(['auth', AuthAdmin::class])->group(function () {

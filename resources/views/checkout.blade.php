@@ -7,6 +7,9 @@
     <section class="shop-checkout container">
       <h2 class="page-title">Vận chuyển và thanh toán</h2>
       <div class="checkout-steps">
+        @if (Session::has('error'))
+            <span>{{Session::get('error')}}</span>
+        @endif
         <a href="cart.html" class="checkout-steps__item active">
           <span class="checkout-steps__item-number">01</span>
           <span class="checkout-steps__item-title">
@@ -74,14 +77,7 @@
                   <input class="form-check-input form-check-input_fill" type="radio" name="checkout_payment_method"
                     id="checkout_payment_method_1" value="bank_transfer" checked>
                   <label class="form-check-label" for="checkout_payment_method_1">
-                    Thanh toán qua ngân hàng
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input form-check-input_fill" type="radio" name="checkout_payment_method"
-                    id="checkout_payment_method_2" value="momo">
-                  <label class="form-check-label" for="checkout_payment_method_2">
-                    Thanh toán qua MOMO
+                    Thanh toán qua VNPAY
                   </label>
                 </div>
                 <div class="form-check">

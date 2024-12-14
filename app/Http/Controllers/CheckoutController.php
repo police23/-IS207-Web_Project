@@ -41,9 +41,57 @@ class CheckoutController extends Controller
         return view('order_confirmation', compact('order'));
     }
 
+    // public function store(Request $request)
+    // {
+        
+    //     DB::transaction(function () use ($request) {
+    //         $order = Order::create([
+    //             'user_id' => Auth::id(),
+    //             'total_price' => $request->input('total_price'),
+    //             'status' => 'Ordered',
+    //             'delivery_address' => $request->input('address'),
+    //             'payment_method' => $request->input('checkout_payment_method'),
+    //         ]);
+
+    //         foreach (json_decode($request->input('cart_items'), true) as $item) {
+    //             OrderDetails::create([
+    //                 'order_id' => $order->order_id,
+    //                 'phone_variant_id' => $item['phone_variant_id'],
+    //                 'quantity' => $item['quantity'],
+    //                 'price' => $item['price'],
+    //             ]);
+    //         }
+            
+    //         // Clear the user's cart
+    //         Cart::where('user_id', Auth::id())->delete();
+    //     });
+        
+    //     return redirect()->route('order.confirmation');
+    // }
+
     public function store(Request $request)
-    {
-        DB::transaction(function () use ($request) {
+{
+    $paymentMethod = $request->input('checkout_payment_method');
+
+    // Lưu thông tin giỏ hàng và địa chỉ trong session để sử dụng sau (trường hợp VNPay)
+    if ($paymentMethod === 'bank_transfer') {
+        session([
+        'cart_items' => json_decode($request->input('cart_items'), true),
+        'delivery_address' => $request->input('address'),
+        'total_price' => $request->input('total_price'),
+    ]);
+   
+        // Chuyển hướng sang VNPay
+        return redirect()->route('payment.vnpay', [
+            'total_price' => $request->input('total_price'),
+        ]);
+        
+    }
+    
+
+     
+        // Tạo đơn hàng ngay lập tức cho phương thức khác VNPay
+        $order = DB::transaction(function () use ($request) {
             $order = Order::create([
                 'user_id' => Auth::id(),
                 'total_price' => $request->input('total_price'),
@@ -63,8 +111,12 @@ class CheckoutController extends Controller
 
             // Clear the user's cart
             Cart::where('user_id', Auth::id())->delete();
+
+            return $order;
         });
 
-        return redirect()->route('order.confirmation');
+        return redirect()->route('order.confirmation')->with('success', 'Đơn hàng đã được tạo thành công!');
     }
 }
+
+
