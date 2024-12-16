@@ -400,7 +400,8 @@ class AdminController extends Controller
 
         Coupon::create($request->all());
 
-        return redirect()->route('admin.discount')->with('success', 'Coupon added successfully!');
+        session()->flash('success', 'Thêm mã giảm giá thành công');
+        return redirect()->route('admin.coupons');
     }
 
     public function editCoupon($id)
@@ -421,7 +422,8 @@ class AdminController extends Controller
         $coupon = Coupon::find($id);
         $coupon->update($request->all());
 
-        return redirect()->route('admin.discount')->with('success', 'Coupon updated successfully!');
+        session()->flash('success', 'Cập nhật mã giảm giá thành công');
+        return redirect()->route('admin.coupons');
     }
 
     public function deleteCoupon($id)
@@ -429,6 +431,7 @@ class AdminController extends Controller
         $coupon = Coupon::find($id);
         $coupon->delete();
 
-        return redirect()->route('admin.discount')->with('success', 'Coupon deleted successfully!');
+        session()->flash('success', 'Xóa mã giảm giá thành công');
+        return redirect()->route('admin.coupons');
     }
 }

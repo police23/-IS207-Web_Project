@@ -50,6 +50,9 @@
                             <th style="width: 20%">Mã giảm giá</th>
                             <th style="width: 15%">Loại giảm giá</th>
                             <th style="width: 15%">Giá trị giảm giá</th>
+                            <th style="width: 10%">Đã sử dụng</th>
+                            <th style="width: 10%">Số lượng</th>
+                            <th style="width: 15%">Đơn hàng tối thiểu</th>
                             <th style="width: 15%">Ngày hết hạn</th>
                             <th style="width: 15%">Hành động</th>
                         </tr>
@@ -59,9 +62,24 @@
                         <tr>
                             <td>{{ $coupon->id }}</td>
                             <td>{{ $coupon->code }}</td>
-                            <td>{{ $coupon->type }}</td>
-                            <td>{{ $coupon->value }}</td>
-                            <td>{{ $coupon->expiry_date }}</td>
+                            <td>
+                                @if($coupon->type == 'percentage')
+                                    Theo phần trăm
+                                @elseif($coupon->type == 'fixed')
+                                    Theo số tiền
+                                @endif
+                            </td>
+                            <td>
+                                @if($coupon->type == 'percentage')
+                                    {{ $coupon->value }}%
+                                @elseif($coupon->type == 'fixed')
+                                    {{ number_format($coupon->value, 0, ',', '.') }} VNĐ
+                                @endif
+                            </td>
+                            <td>{{ $coupon->usage_count }}</td>
+                            <td>{{ $coupon->max_usage }}</td>
+                            <td>{{ number_format($coupon->minimum_order_value, 0, ',', '.') }} VNĐ</td>
+                            <td>{{ \Carbon\Carbon::parse($coupon->expiry_date)->format('d-m-Y') }}</td>
                             <td>
                                 <div class="list-icon-function">
                                     <a href="{{ route('admin.coupon.edit', ['id'=>$coupon->id] )}}">

@@ -200,9 +200,9 @@
                                                 <th>Storage</th>
                                                 <th>Quantity</th>
                                                 <th>Price</th>
-                                                <th>Sale Price</th>
+    
                                                 <th>Image</th>
-                                                <th>Stock</th>
+                                                
                                                 <th>Feature</th>
                                                 </tr>
                                             </thead>
@@ -246,17 +246,7 @@
                                                                 value="{{ $variant->regular_price }}"
                                                                 >
                                                         </td>
-                                                        <td>
-                                                            <input 
-                                                                type="number" 
-                                                                name="sale_price[]" 
-                                                                class="form-control" 
-                                                                placeholder="Enter sale price" 
-                                                                step="0.01" 
-                                                                min="0" 
-                                                                value="{{ $variant->sale_price }}"
-                                                                >
-                                                        </td>
+                                                       
                                                         <td>
                                                             <div class="item up-load text-center p-2 border rounded">
                     <label class="uploadfile d-flex flex-column align-items-center justify-content-center" style="cursor: pointer;">
@@ -275,12 +265,7 @@
                     </label>
                 </div>
                                                         </td>
-                                                        <td>
-                                                            <select name="stock_status[]" class="form-select">
-                                                                <option value="instock" {{ $variant->stock_status == 'instock' ? 'selected' : '' }}>In Stock</option>
-                                                                <option value="outofstock" {{ $variant->stock_status == 'outofstock' ? 'selected' : '' }}>Out of Stock</option>
-                                                            </select>
-                                                        </td>
+                                                        
                                                         <td>
                                                             <select name="featured[]" class="form-select">
                                                                 <option value="0" {{ $variant->featured == '0' ? 'selected' : '' }}>No</option>
