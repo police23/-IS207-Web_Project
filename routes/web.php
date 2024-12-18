@@ -56,6 +56,11 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['auth', AuthAdmin::class])->group(function () {
+    Route::get('/admin/top-products', [AdminController::class, 'getTopProducts'])->name('admin.top-products'); // Thay AdminController bằng controller của bạn
+    Route::get('/admin/phone-quantity-data', [AdminController::class, 'getMonthlyQuantity']);
+    Route::get('/admin/phone-revenue-data', [AdminController::class, 'getMonthlyRevenue'])->name('admin.chart-data-bar');
+    Route::get('/admin/top-selling-products', [AdminController::class, 'getTopSellingPhones']);
+
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
     Route::get('/admin/brands', [AdminController::class, 'brands'])->name('admin.brands');
     Route::get('/admin/brand/add', [AdminController::class, 'add_brand'])->name('admin.brand.add');

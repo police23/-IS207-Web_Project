@@ -31,7 +31,8 @@
                         </select>
                     </div>
                     <div class="chart-container">
-                        <canvas id="line-chart-sales"></canvas>
+                        {{-- <canvas id="line-chart-sales"></canvas> --}}
+                        <canvas id="phoneSalesChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -94,36 +95,7 @@
                         <option value="2025">2025</option>
                     </select>
                 </div>
-                <div class="top-products-grid">
-                    @php
-                        // Mảng chứa các URL hình ảnh khác nhau cho từng sản phẩm
-                        $images = [
-                            'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-16-1.png',
-                            'https://minhtuanmobile.com/uploads/products/240910084742-iphone-16-pro-max-black-titanium-pdp-image-position-1a-black-titanium-color-vn-vi.jpg',
-                            'https://example.com/product3.jpg',
-                            'https://example.com/product4.jpg',
-                            'https://example.com/product5.jpg',
-                            'https://example.com/product6.jpg',
-                            'https://example.com/product7.jpg',
-                            'https://example.com/product8.jpg',
-                            'https://example.com/product9.jpg',
-                            'https://example.com/product10.jpg',
-                        ];
-                    @endphp
-
-                    @for ($i = 1; $i <= 10; $i++)
-                        <div class="product-card {{ $i <= 5 ? 'left-card' : 'right-card' }}" onclick="toggleProductInfo({{ $i }})">
-                            <!-- Hình ảnh sản phẩm -->
-                            <img src="{{ $images[$i-1] }}" alt="Sản phẩm {{ $i }}" class="product-image" id="image-{{ $i }}">
-                            <!-- Thông tin sản phẩm -->
-                            <div class="product-info" id="info-{{ $i }}">
-                                <h6>Top {{ $i }} - Sản phẩm {{ $i }}</h6>
-                                <p>Số lượng bán: <strong>{{ rand(100, 500) }}</strong></p>
-                                <p>Doanh thu: <strong>${{ rand(1000, 5000) }}</strong></p>
-                            </div>
-                        </div>
-                    @endfor
-                </div>
+                <div id="top-products-grid"></div>
             </div>
         </div>
     </div>
@@ -225,65 +197,345 @@
     }
 </style>
 
-<!-- Chart.js Scripts -->
+{{-- <!-- Chart.js Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Biểu đồ đường - Số lượng bán được
-        const lineCtx = document.getElementById('line-chart-sales');
-        new Chart(lineCtx, {
-            type: 'line',
-            data: {
-                labels: Array.from({ length: 30 }, (_, i) => `Ngày ${i + 1}`),
-                datasets: [{
-                    label: 'Số lượng bán',
-                    data: Array.from({ length: 30 }, () => Math.floor(Math.random() * 50 + 100)),
-                    borderColor: '#4CAF50',
-                    backgroundColor: 'rgba(76, 175, 80, 0.2)',
-                    tension: 0.4,
-                    fill: true
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false
-            }
-        });
+    // document.addEventListener("DOMContentLoaded", function() {
+    //     // Biểu đồ đường - Số lượng bán được
+    //     const lineCtx = document.getElementById('line-chart-sales');
+    //     new Chart(lineCtx, {
+    //         type: 'line',
+    //         data: {
+    //             labels: Array.from({ length: 30 }, (_, i) => `Ngày ${i + 1}`),
+    //             datasets: [{
+    //                 label: 'Số lượng bán',
+    //                 data: Array.from({ length: 30 }, () => Math.floor(Math.random() * 50 + 100)),
+    //                 borderColor: '#4CAF50',
+    //                 backgroundColor: 'rgba(76, 175, 80, 0.2)',
+    //                 tension: 0.4,
+    //                 fill: true
+    //             }]
+    //         },
+    //         options: {
+    //             responsive: true,
+    //             maintainAspectRatio: false
+    //         }
+    //     });
 
-        // Biểu đồ cột - Doanh thu
-        const barCtx = document.getElementById('bar-chart-revenue');
-        new Chart(barCtx, {
-            type: 'bar',
-            data: {
-                labels: Array.from({ length: 30 }, (_, i) => `Ngày ${i + 1}`),
-                datasets: [{
-                    label: 'Doanh thu',
-                    data: Array.from({ length: 30 }, () => Math.floor(Math.random() * 4000 + 2000)),
-                    backgroundColor: 'rgba(255, 152, 0, 0.8)',
-                    borderColor: '#FF9800',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false
-            }
-        });
+    //     // Biểu đồ cột - Doanh thu
+    //     const barCtx = document.getElementById('bar-chart-revenue');
+    //     new Chart(barCtx, {
+    //         type: 'bar',
+    //         data: {
+    //             labels: Array.from({ length: 30 }, (_, i) => `Ngày ${i + 1}`),
+    //             datasets: [{
+    //                 label: 'Doanh thu',
+    //                 data: Array.from({ length: 30 }, () => Math.floor(Math.random() * 4000 + 2000)),
+    //                 backgroundColor: 'rgba(255, 152, 0, 0.8)',
+    //                 borderColor: '#FF9800',
+    //                 borderWidth: 1
+    //             }]
+    //         },
+    //         options: {
+    //             responsive: true,
+    //             maintainAspectRatio: false
+    //         }
+    //     });
+    // });
+
+    // // Hàm để đổi hình ảnh và thông tin khi nhấn vào thẻ sản phẩm
+    // function toggleProductInfo(productIndex) {
+    //     const image = document.getElementById('image-' + productIndex);
+    //     const info = document.getElementById('info-' + productIndex);
+
+    //     // Đổi giữa ẩn và hiện
+    //     if (info.classList.contains('hidden')) {
+    //         info.classList.remove('hidden');
+    //         image.style.opacity = 0; // Ẩn hình ảnh
+    //     } else {
+    //         info.classList.add('hidden');
+    //         image.style.opacity = 1; // Hiện hình ảnh
+    //     }
+    // }
+    $(document).ready(function () {
+    $.ajax({
+        url: '/phone-sales-data', // Route đến controller
+        method: 'GET',
+        success: function (response) {
+            console.log('success')
+            // Lấy dữ liệu ngày và số lượng bán
+            const labels = response.map(item => item.sale_date);
+            const data = response.map(item => item.total_sold);
+
+            // Hiển thị biểu đồ đường với Chart.js
+            const ctx = document.getElementById('phoneSalesChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Số lượng điện thoại bán được',
+                        data: data,
+                        borderColor: 'blue',
+                        backgroundColor: 'rgba(0, 123, 255, 0.2)',
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Số lượng điện thoại bán theo ngày'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: { display: true, text: 'Ngày' }
+                        },
+                        y: {
+                            title: { display: true, text: 'Số lượng' },
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        },
+        error: function (error) {
+            console.error("Error fetching data:", error);
+        }
     });
+});
+</script> --}}
+<!-- Chart.js -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+$(document).ready(function () {
+    let phoneSalesChart; // Lưu đối tượng biểu đồ để cập nhật lại sau mỗi request AJAX
 
-    // Hàm để đổi hình ảnh và thông tin khi nhấn vào thẻ sản phẩm
-    function toggleProductInfo(productIndex) {
-        const image = document.getElementById('image-' + productIndex);
-        const info = document.getElementById('info-' + productIndex);
+    // Hàm để gọi AJAX và cập nhật biểu đồ
+    function fetchDataAndUpdateChart() {
+        const selectedMonth = $('#month-select-line').val();
+        const selectedYear = $('#year-select-line').val();
 
-        // Đổi giữa ẩn và hiện
-        if (info.classList.contains('hidden')) {
-            info.classList.remove('hidden');
-            image.style.opacity = 0; // Ẩn hình ảnh
-        } else {
-            info.classList.add('hidden');
-            image.style.opacity = 1; // Hiện hình ảnh
+        $.ajax({
+            url: '/admin/phone-quantity-data', // Route đến controller
+            method: 'GET',
+            data: { month: selectedMonth, year: selectedYear }, // Gửi tháng và năm
+            success: function (response) {
+                console.log('Dữ liệu nhận về:', response);
+
+                // Chuẩn bị dữ liệu cho biểu đồ
+                const labels = response.map(item => {
+                    const day = item.sale_date.split('-')[2]; // Lấy phần thứ 3 của chuỗi (ngày)
+                    return `Ngày ${day}`; // Ghi chữ "Ngày" trước số ngày
+                }); // Ngày bán hàng
+                const data = response.map(item => item.total_sold); // Số lượng bán được
+
+                // Kiểm tra nếu đã có biểu đồ thì hủy biểu đồ cũ
+                if (phoneSalesChart) {
+                    phoneSalesChart.destroy();
+                }
+
+                // Vẽ biểu đồ mới
+                const ctx = document.getElementById('phoneSalesChart').getContext('2d');
+                phoneSalesChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Số lượng điện thoại bán được',
+                            data: data,
+                            borderColor: '#4CAF50',
+                            backgroundColor: 'rgba(76, 175, 80, 0.2)',
+                            fill: true,
+                            tension: 0.3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: `Số lượng bán trong tháng ${selectedMonth}/${selectedYear}`
+                            }
+                        },
+                        scales: {
+                            x: {
+                                title: { display: true, text: 'Ngày' }
+                            },
+                            y: {
+                                title: { display: true, text: 'Số lượng' },
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            },
+            error: function (error) {
+                console.error("Lỗi khi lấy dữ liệu:", error);
+            }
+        });
+    }
+
+    // Gọi hàm khi combobox tháng hoặc năm thay đổi
+    $('#month-select-line, #year-select-line').on('change', fetchDataAndUpdateChart);
+
+    // Gọi hàm lần đầu để biểu đồ hiển thị dữ liệu mặc định
+    fetchDataAndUpdateChart();
+
+    let phoneRevenueChart; // Lưu đối tượng biểu đồ để cập nhật lại sau mỗi request AJAX
+
+    // Hàm để gọi AJAX và cập nhật biểu đồ
+    function fetchDataAndUpdateChartBar() {
+        const selectedMonth = $('#month-select-bar').val();
+        const selectedYear = $('#year-select-bar').val();
+
+        $.ajax({
+            url: '/admin/phone-revenue-data', // Route đến controller
+            method: 'GET',
+            data: { month: selectedMonth, year: selectedYear }, // Gửi tháng và năm
+            success: function (response) {
+                console.log('Dữ liệu nhận về:', response);
+
+                // Chuẩn bị dữ liệu cho biểu đồ
+                const labels = response.data.map(item => {
+                    const day = item.sales_date.split('-')[2]; // Lấy phần thứ 3 của chuỗi (ngày)
+                    return `Ngày ${day}`; // Ghi chữ "Ngày" trước số ngày
+                }); // Ngày bán hàng
+                const data = response.data.map(item => item.total_revenue); // Doanh thu
+
+                // Kiểm tra nếu đã có biểu đồ thì hủy biểu đồ cũ
+                if (phoneRevenueChart) {
+                    phoneRevenueChart.destroy();
+                }
+
+                // Vẽ biểu đồ cột mới
+                const ctx = document.getElementById('bar-chart-revenue').getContext('2d');
+                phoneRevenueChart = new Chart(ctx, {
+                    type: 'bar', // Loại biểu đồ là cột
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Doanh thu',
+                            data: data,
+                            backgroundColor: '#4CAF50', // Màu sắc của cột
+                            borderColor: '#388E3C', // Màu viền của cột
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: `Doanh thu trong tháng ${selectedMonth}/${selectedYear}`
+                            }
+                        },
+                        scales: {
+                            x: {
+                                title: { display: true, text: 'Ngày' }
+                            },
+                            y: {
+                                title: { display: true, text: 'Doanh thu' },
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            },
+            error: function (error) {
+                console.error("Lỗi khi lấy dữ liệu:", error);
+            }
+        });
+    }
+
+    // Gọi hàm khi combobox tháng hoặc năm thay đổi
+    $('#month-select-bar, #year-select-bar').on('change', fetchDataAndUpdateChartBar);
+
+    // Gọi hàm lần đầu để biểu đồ hiển thị dữ liệu mặc định
+    fetchDataAndUpdateChartBar();
+
+    // Gọi API để lấy top 10 sản phẩm bán chạy
+    function fetchTopSellingProducts() {
+        const month = $('#month-select-products').val();  // Lấy tháng từ combobox
+        const year = $('#year-select-products').val();   // Lấy năm từ combobox
+
+        $.ajax({
+            url: '/admin/top-selling-products',
+            method: 'GET',
+            data: { month: month, year: year },
+            success: function(response) {
+                console.log('Top selling products:', response.top_products);
+                
+                // Xóa sản phẩm cũ trước khi thêm mới
+                $('#top-products-grid').empty();
+                console.log($('#top-products-grid').length);
+                // Thêm sản phẩm mới vào grid
+                response.top_products.forEach((product, index) => {
+                    const productCard = `
+                        <div class="product-card ${index < 5 ? 'left-card' : 'right-card'}" onclick="toggleProductInfo(${index + 1})">
+                            <img src="${product.image}" alt="Sản phẩm ${index + 1}" class="product-image" id="image-${index + 1}">
+                            <div class="product-info" id="info-${index + 1}">
+                                <h6>Top ${index + 1} - ${product.phone_variants_name}</h6>
+                                <p>Số lượng bán: <strong>${product.total_quantity_sold}</strong></p>
+                            </div>
+                        </div>
+                    `;
+                    $('#top-products-grid').append(productCard);
+                });
+            },
+            error: function(error) {
+                console.error('Error fetching top selling products:', error);
+            }
+        });
+    }
+
+    // Gọi hàm khi combobox tháng hoặc năm thay đổi
+    $('#month-select-products, #year-select-products').on('change', fetchTopSellingProducts);
+
+    // Gọi hàm lần đầu để hiển thị sản phẩm mặc định
+    fetchTopSellingProducts();
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Lấy tháng và năm hiện tại
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth() + 1; // getMonth() trả về từ 0-11 nên cần +1
+    const currentYear = currentDate.getFullYear();
+
+    // Lấy các phần tử select
+    const monthSelect = document.getElementById("month-select-line");
+    const yearSelect = document.getElementById("year-select-line");
+
+    const monthSelectBar = document.getElementById("month-select-bar");
+    const yearSelectBar = document.getElementById("year-select-bar");
+
+    const monthSelectProduct = document.getElementById("month-select-products");
+    const yearSelectProduct = document.getElementById("year-select-products");
+
+    // Tự động chọn giá trị tương ứng với tháng hiện tại
+    for (let i = 0; i < monthSelect.options.length; i++) {
+        if (parseInt(monthSelect.options[i].value) === currentMonth) {
+            monthSelect.selectedIndex = i;
+            monthSelectBar.selectedIndex = i
+            monthSelectProduct.selectedIndex = i
+            break;
         }
     }
+
+    // Tự động chọn giá trị tương ứng với năm hiện tại
+    for (let i = 0; i < yearSelect.options.length; i++) {
+        if (parseInt(yearSelect.options[i].value) === currentYear) {
+            yearSelect.selectedIndex = i;
+            yearSelectBar.selectedIndex = i;
+            yearSelectProduct.selectedIndex = i;
+            break;
+        }
+    }
+});
+
 </script>
 @endsection

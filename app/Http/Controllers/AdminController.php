@@ -7,6 +7,7 @@ use App\Models\OrderDetails;
 use App\Models\Phone;
 use App\Models\PhoneVariants;
 use App\Models\User;
+use DB;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
@@ -19,7 +20,80 @@ use App\Models\Coupon;
 class AdminController extends Controller
 {
     //
+    public function getMonthlyQuantity(Request $request)
+{
+    $month = $request->input('month');
+    $year = $request->input('year');
+
+    // Truy vấn dữ liệu theo tháng và năm
+    $data = DB::table('orders')
+        ->join('order_details', 'orders.order_id', '=', 'order_details.order_id')
+        ->select(
+            DB::raw('DATE(orders.created_at) as sale_date'),
+            DB::raw('SUM(order_details.quantity) as total_sold')
+        )
+        ->whereYear('orders.created_at', $year)
+        ->whereMonth('orders.created_at', $month)
+        ->groupBy('sale_date')
+        ->orderBy('sale_date', 'asc')
+        ->get();
+
+    return response()->json($data);
+}
+public function getMonthlyRevenue(Request $request)
+    {
+        // Lấy tháng và năm từ request, mặc định là tháng hiện tại và năm hiện tại
+        $month = $request->input('month', date('m'));
+        $year = $request->input('year', date('Y'));
+
+        // Query lấy dữ liệu doanh thu
+        $revenueData = DB::table('orders AS o')
+            ->select(DB::raw('DATE(o.created_at) AS sales_date'), DB::raw('SUM(o.total_price) AS total_revenue'))
+            ->whereMonth('o.created_at', $month)
+            ->whereYear('o.created_at', $year)
+            ->groupBy('sales_date')
+            ->orderBy('sales_date', 'ASC')
+            ->get();
+
+        // Trả về JSON
+        return response()->json([
+            'month' => $month,
+            'year' => $year,
+            'data' => $revenueData
+        ]);
+    }
+
+    public function getTopSellingPhones(Request $request)
+{
+    $month = $request->input('month', date('m'));
+    $year = $request->input('year', date('Y'));
+
+    // Truy vấn lấy top 10 sản phẩm bán chạy nhất theo số lượng
+    $topProducts = DB::table('order_details AS od')
+    ->join('phone_variants AS pv', 'od.phone_variant_id', '=', 'pv.id')
+    ->join('orders AS o', 'od.order_id', '=', 'o.order_id')
+    ->select('pv.phone_id', 'pv.phone_variants_name', DB::raw('MAX(pv.image) AS image'), DB::raw('SUM(od.quantity) AS total_quantity_sold'))
+    ->whereMonth('o.created_at', $month)
+    ->whereYear('o.created_at', $year)
+    ->groupBy('pv.phone_id', 'pv.phone_variants_name')
+    ->orderByDesc('total_quantity_sold')
+    ->limit(10)
+    ->get();
+
+    // Thêm đường dẫn hình ảnh đầy đủ
+    $topProducts->transform(function ($product) {
+        $product->image = asset('uploads/thumbnails/phones/' . $product->image);
+        return $product;
+    });
+
+    return response()->json([
+        'month' => $month,
+        'year' => $year,
+        'top_products' => $topProducts
+    ]);
+}
     public function index() {
+
         return view('admin.index');
     }
 
@@ -175,9 +249,7 @@ class AdminController extends Controller
             'colors'=> 'required',
             'quantity'=> 'required',
             'regular_price'=> 'required',
-            'sale_price'=> 'required',
             'storages' => 'required|array|min:1',
-            'stock_status'=> 'required',
             'featured'=> 'required',
         ]);
 
@@ -199,8 +271,6 @@ class AdminController extends Controller
         $phoneVariantsStorages = $request->input('storages');
         $quantities = $request->input('quantity');
         $regularPrices = $request->input('regular_price');
-        $salePrices = $request->input('sale_price');
-        $stockStatuses = $request->input('stock_status');
         $featuredStatuses = $request->input('featured');
         $images = $request->file('image'); 
  
@@ -224,8 +294,6 @@ class AdminController extends Controller
             $phoneVariant->storage_id = $phoneVariantsStorages[$index];
             $phoneVariant->quantity = $quantities[$index];
             $phoneVariant->regular_price = $regularPrices[$index];
-            $phoneVariant->sale_price = $salePrices[$index];
-            $phoneVariant->stock_status = $stockStatuses[$index];
             $phoneVariant->featured = $featuredStatuses[$index];
             
             

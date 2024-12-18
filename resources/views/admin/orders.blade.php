@@ -79,7 +79,7 @@
                                 <td class="text-center">{{ $order->user->phonenumber }}</td>
                                
                                 <td class="text-center">{{ $order->created_at->format('Y-m-d') }}</td>
-                                <td class="text-center">{{ $order->orderDetails->count() }}</td>
+                                <td class="text-center">{{ $order->orderDetails->sum('quantity') }}</td>
                                 <td class="text-center">{{ $order->total_price}}</td>
                                 <td class="text-center">{{ $order->delivery_date }}</td>
                                 <td class="text-center">
