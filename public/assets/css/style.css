@@ -6293,7 +6293,7 @@ progress {
 
 .slider-selection {
   position: absolute;
-  background-color: #222222; }
+  background-color: #7e3af2; }
 
 .slider-selection.tick-slider-selection {
   background-color: #6f5858;
@@ -8334,7 +8334,7 @@ img {
 .accordion-button {
   padding: 1.75rem 1.875rem 1.125rem;
   border: 1px solid #eeeeee;
-  color: #222222;
+  color: #7e3af2;
   background-color: #ffffff;
   font-size: 1rem;
   font-weight: 500;
@@ -8851,13 +8851,13 @@ img {
 
 .btn-secondary {
   color: #fff;
-  background-color: #767676;
-  border-color: #767676;
+  background-color: #7e3af2;
+  border-color: #7e3af2;
   box-shadow: none; }
   .btn-secondary:hover {
-    color: #fff;
-    background-color: #646464;
-    border-color: #5e5e5e; }
+    color: #7e3af2;
+    background-color: #ffffff;
+    border-color: #7e3af2; }
   .btn-check:focus + .btn-secondary, .btn-secondary:focus {
     color: #fff;
     background-color: #646464;
@@ -10246,6 +10246,8 @@ textarea.form-control-lg {
   object-fit: cover; }
 
 .pc__img-wrapper {
+  border: 2px solid;
+  border-color: #7e3af2;
   display: block;
   position: relative;
   height: 0;
@@ -12072,7 +12074,7 @@ textarea.form-control-lg {
   position: relative;
   padding-top: 2px;
   padding-bottom: 2px;
-  color: #222222;
+  color: #ffffff;
   font-weight: 500;
   line-height: 1.5rem;
   text-decoration: none;
@@ -12111,7 +12113,7 @@ textarea.form-control-lg {
   display: inline-block;
   position: relative;
   padding: 0.5em 0;
-  color: #222222;
+  color: #7e3af2;
   line-height: 1.5em; }
 
 .menu-link_us-s:after {
@@ -12280,7 +12282,7 @@ textarea.form-control-lg {
   display: flex;
   padding: 0.25rem 0.5rem;
   text-decoration: none;
-  color: #222222; }
+  color: #ffffff; }
   .header-tools__item .flaticon::before {
     display: block;
     line-height: 1; }
@@ -12298,8 +12300,8 @@ textarea.form-control-lg {
     width: 1rem;
     height: 1rem;
     border-radius: 100%;
-    background: #7E3AF2;
-    color: #ffffff;
+    background: #ffffff;
+    color: #7E3AF2;
     font-size: 0.625rem;
     line-height: 1rem;
     text-align: center; }
@@ -12586,6 +12588,7 @@ textarea.form-control-lg {
       margin-right: 0.875rem; }
   .header-mobile__navigation .navigation__link {
     padding-top: 0.625rem;
+    color: #222222;
     padding-bottom: 0.625rem;
     font-size: 1rem; }
     .header-mobile__navigation .navigation__link .flaticon {
@@ -12627,6 +12630,7 @@ textarea.form-control-lg {
     visibility: visible; }
 
 .header_sticky {
+  background-color: #7E3AF2;
   top: 0;
   left: 0;
   width: 100%;
@@ -13645,6 +13649,8 @@ textarea.form-control-lg {
               .product-single__media.vertical-thumbnail .product-single__image-item > a.product-degree .flaticon, .product-single__media.vertical-thumbnail .product-single__image-item > button.product-degree .flaticon {
                 font-size: 1.5rem; } }
     .product-single__media.vertical-thumbnail .product-single__image img {
+      border: 2px solid;
+      border-color: #7e3af2;
       width: 100%; }
   .product-single__media.vertical-thumbnail .product-single__thumbnail {
     flex: 0 0 100%;
@@ -14369,7 +14375,8 @@ button.js-add-wishlist.active .flaticon.flaticon-heart, a.add-to-wishlist.active
 
 .shop-checkout .page-title {
   font-size: 2.1875rem;
-  margin-bottom: 3.125rem;
+  margin-top: 2.125rem;
+  margin-bottom: 1.125rem;
   text-transform: uppercase; }
 .shop-checkout .checkout-steps {
   display: flex;

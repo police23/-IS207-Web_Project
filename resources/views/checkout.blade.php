@@ -131,7 +131,7 @@
                     </tbody>
                   </table>
                 </div>
-                <div class="d-flex justify-content-center" style="margin-left: -3cm;">
+                <div>
                   <a href="{{ route('cart.index') }}" class="btn btn-secondary mr-2" style="margin-right: 2cm;">Quay lại</a>
                   <button class="btn btn-primary btn-checkout">ĐẶT ĐƠN</button>
                 </div>

@@ -257,8 +257,7 @@
   </svg>
   <style>
     #header {
-      padding-top: 8px;
-      padding-bottom: 8px;
+      background-color: #7E3AF2;
     }
 
     .logo__image {
@@ -276,7 +275,7 @@
 
       <div class="logo">
         <a href="index.html">
-          <img src="{{ asset('assets/images/logo.png') }}" alt="Uomo" class="logo__image d-block" />
+          <img src="{{ asset('assets/images/logo-white.png') }}" alt="Uomo" class="logo__image d-block" />
         </a>
       </div>
 
@@ -413,7 +412,7 @@
       <div class="header-desk header-desk_type_1">
         <div class="logo">
           <a href="{{ route('home.index') }}">
-            <img src="{{ asset('assets/images/logo.png') }}" alt="Uomo" class="logo__image d-block" />
+            <img src="{{ asset('assets/images/logo-white.png') }}" alt="Uomo" class="logo__image d-block" />
           </a>
         </div>
 
@@ -457,13 +456,13 @@
         <div class="header-tools d-flex align-items-center">
           <div class="header-tools__item hover-container">
             <div class="js-hover__open position-relative">
-              <a class="js-search-popup search-field__actor" href="#">
+              <div class="js-search-popup search-field__actor" href="#">
                 <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none"
                   xmlns="http://www.w3.org/2000/svg">
-                  <use href="#icon_search" />
+                  <use href="#icon_search" fill="#ffffff"></use>
                 </svg>
                 <i class="btn-icon btn-close-lg"></i>
-              </a>
+              </div>
             </div>
 
             <div class="search-popup js-hidden-content">
@@ -486,7 +485,7 @@
           <div class="header-tools__item hover-container">
             <a href="{{ Auth::check() ? route('profile') : route('login') }}" class="header-tools__item">
               @if(Auth::check())
-                <span class="pr-6px">{{ Auth::user()->username }}</span>
+                <span class="pr-6px" style="padding-right: 10px;">{{ Auth::user()->username }}</span>
               @endif
               <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <use href="#icon_user" />

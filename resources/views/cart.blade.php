@@ -127,9 +127,7 @@
                   <tr>
                     <th>Phí vận chuyển</th>
                     <td>
-                      <div class="form-check">
-                      Miễn phí
-                      </div>
+                      <div>Miễn phí</div>
                       </td>
                   </tr>
 
