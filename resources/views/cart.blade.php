@@ -3,9 +3,8 @@
 
 <form id="update-cart-form" action="{{ route('cart.update') }}" method="POST">
   @csrf
-  <main class="pt-80">
-    <div class="mb-4 pb-4"></div>
-    <section class="shop-checkout container cart-expanded product-list-expanded">
+  <main class="pt-90">
+    <section class="shop-checkout container">
       <h2 class="page-title">Giỏ hàng</h2>
       <div class="checkout-steps">
         <a href="{{ route('cart.index') }}" class="checkout-steps__item active">
@@ -178,7 +177,7 @@
       border-bottom: none !important;
     }
     .empty-cart {
-      margin-top: 100px; /* Adjusted margin-top to center the empty cart section */
+      margin-top: 5.5rem; /* Adjusted margin-top to center the empty cart section */
     }
     .empty-cart i {
       color: #ccc;

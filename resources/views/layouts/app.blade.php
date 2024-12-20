@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>WebFone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <meta name="author" content="WebFone" />
@@ -268,7 +268,7 @@
     <div class="container d-flex align-items-center h-100">
       <a class="mobile-nav-activator d-block position-relative" href="#">
         <svg class="nav-icon" width="25" height="18" viewBox="0 0 25 18" xmlns="http://www.w3.org/2000/svg">
-          <use href="#icon_nav" />
+          <use href="#icon_nav" fill="#ffffff"></use>
         </svg>
         <button class="btn-close-lg position-absolute top-0 start-0 w-100"></button>
       </a>

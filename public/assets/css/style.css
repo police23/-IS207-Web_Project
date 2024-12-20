@@ -12641,7 +12641,7 @@ textarea.form-control-lg {
 .header_sticky-active {
   position: fixed;
   animation: moveDown .5s;
-  background-color: #ffffff;
+  background-color: #7e3af2;
   box-shadow: 0 8px 25px 0 rgba(140, 152, 164, 0.15);
   z-index: 1020; }
   .header_sticky-active.header_sticky-bg_dark {
@@ -14375,7 +14375,7 @@ button.js-add-wishlist.active .flaticon.flaticon-heart, a.add-to-wishlist.active
 
 .shop-checkout .page-title {
   font-size: 2.1875rem;
-  margin-top: 2.125rem;
+  margin-top: 20px;
   margin-bottom: 1.125rem;
   text-transform: uppercase; }
 .shop-checkout .checkout-steps {
