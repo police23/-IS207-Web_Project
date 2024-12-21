@@ -5,7 +5,7 @@
   @csrf
   <main class="pt-90">
     <section class="shop-checkout container">
-      <h2 class="page-title">Giỏ hàng</h2>
+      <h2 class="page-title" style="color: #7e3af2;">Giỏ hàng</h2>
       <div class="checkout-steps">
         <a href="{{ route('cart.index') }}" class="checkout-steps__item active">
           <span class="checkout-steps__item-number">01</span>

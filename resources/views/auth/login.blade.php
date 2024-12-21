@@ -7,7 +7,7 @@
       <ul class="nav nav-tabs mb-5" id="login_register" role="tablist">
         <li class="nav-item" role="presentation">
           <a class="nav-link nav-link_underscore active" id="login-tab" data-bs-toggle="tab" href="#tab-item-login"
-            role="tab" aria-controls="tab-item-login" aria-selected="true">Đăng nhập</a>
+            role="tab" aria-controls="tab-item-login" aria-selected="true" style="color: #7e3af2;">Đăng nhập</a>
         </li>
       </ul>
       <div class="tab-content pt-2" id="login_register_tab_content">
